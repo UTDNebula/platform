@@ -1,0 +1,28 @@
+{
+  "name": "platform",
+  "version": "0.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build --no-daemon",
+    "dev": "turbo run dev --no-daemon",
+    "lint": "turbo run lint --no-daemon",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.13",
+    "eslint-config-custom": "workspace:*",
+    "postcss": "^8.4.21",
+    "prettier": "latest",
+    "tailwindcss": "^3.2.7",
+    "tsconfig": "workspace:*",
+    "turbo": "latest"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "packageManager": "pnpm@7.19.0"
+}
