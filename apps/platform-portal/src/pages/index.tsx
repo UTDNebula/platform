@@ -1,8 +1,8 @@
 /*
  * Platform Portal Homepage (http(s)://[hosturl]/)
- * 
+ *
  * (Description on the way)
- * 
+ *
  * Written by Daniel "Ludo" DeAnda (dcd180001) for CS4485.0W1
  * (Nebula Platform CS Project) starting March 21, 2023
  */
@@ -17,9 +17,14 @@ export default function Home() {
     return <div>Loading...</div>;
   }
   return (
-    <div>
-      <h1 className="pb-10">{hello.data.greeting}</h1>
-      <Button />
+    <div className="ml-2">
+      <h1 className="pb-10 text-brand">{hello.data.greeting}</h1>
+      <Button
+        style="secondary"
+        action="https://github.com/UTDNebula/platform/issues/1"
+        text="Regenerate"
+        icon="refresh"
+      />
     </div>
   );
 }
