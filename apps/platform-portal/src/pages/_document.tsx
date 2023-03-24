@@ -1,20 +1,20 @@
 /*
  * Custom NextJS Document
- * 
+ *
  * This file is responsible for configuring the <Head>s of the HTML files that
  * this NextJS app will send to users. We use <link> tags to add the favicon
  * and Google Fonts. <meta> information can also be added here. For more
  * information, see https://nextjs.org/docs/advanced-features/custom-document.
- * 
+ *
  * Written by Daniel "Ludo" DeAnda (dcd180001) for CS4485.0W1
  * (Nebula Platform CS Project) starting March 21, 2023
  */
 
 import React from 'react';
 import { Html, Head, Main, NextScript } from 'next/document';
+import { NextPage } from 'next';
 
-export default function Document() {
-  return (
+const Document: NextPage = () => (
     <Html>
       <Head>
         <link rel="icon" href="/favicon.ico" />
@@ -25,7 +25,7 @@ export default function Document() {
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Jost:wght@700&family=Roboto:ital@0;1&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Jost:wght@400;700&family=Roboto:ital,wght@0,400;0,700;1,400&display=swap"
           rel="stylesheet"
         />
       </Head>
@@ -34,5 +34,6 @@ export default function Document() {
         <NextScript />
       </body>
     </Html>
-  );
-}
+  )
+
+export default Document;
