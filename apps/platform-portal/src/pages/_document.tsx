@@ -12,9 +12,9 @@
 
 import React from 'react';
 import { Html, Head, Main, NextScript } from 'next/document';
+import { NextPage } from 'next';
 
-export default function Document() {
-  return (
+const Document: NextPage = () => (
     <Html>
       <Head>
         <link rel="icon" href="/favicon.ico" />
@@ -34,5 +34,6 @@ export default function Document() {
         <NextScript />
       </body>
     </Html>
-  );
-}
+  )
+
+export default Document;

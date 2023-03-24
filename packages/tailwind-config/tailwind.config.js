@@ -10,6 +10,9 @@ module.exports = {
         'roboto': ['Roboto', 'sans-serif'],
         'jost': ['Jost', 'Roboto', 'sans-serif']
       },
+      height: {
+        '13': '3.25rem'
+      }
     },
   },
   plugins: [],

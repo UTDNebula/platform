@@ -4,8 +4,9 @@
 
 ## Structure
 
-- Each of the `.tsx` files (except for `index.tsx`) contains a React component that can be imported from any and all of the `apps` in this monorepo.
-- `index.tsx` collects all of the default exports from all of the other `.tsx` files so that they can be imported correctly in `apps`.
+- Each of the `src/components/*.tsx` files contains a React component that can be imported from any and all of the `apps` in this monorepo.
+- `src/index.tsx` collects all of the default exports from all the other `.tsx` files so that they can be imported correctly in `apps`.
+- Helper files are contained within `src/utils`.
 
 ## Package Manager
 - IMPORTANT: You MUST use `pnpm` as your package manager for this repository.

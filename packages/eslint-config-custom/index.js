@@ -29,7 +29,6 @@ module.exports = {
     "@typescript-eslint/no-require-imports": "error",
     "react/function-component-definition": "off",
     "react/jsx-props-no-spreading": "off",
-    "react/react-in-jsx-scope": "off",
     "@next/next/no-html-link-for-pages": "off",
   },
 };
