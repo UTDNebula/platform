@@ -1,7 +1,7 @@
 /*
  * Button Component
  *
- * Exports a functional component that renders a styled and working <Button>.
+ * Exports a function component that renders a styled and working <Button>.
  * A <Button> may contain text, an icon, or both. It can either act as a link
  * to another page (by wrapping it with <Link>) or call a supplied function
  * when clicked. Finally, it can have one of three visual styles and can either
@@ -29,20 +29,20 @@
  */
 
 import React from 'react';
-import Icon from 'react-material-symbols/outlined';
+import MaterialSymbol from 'react-material-symbols/outlined';
 import { MaterialSymbolProps } from 'react-material-symbols';
 import BadPropsException from '../utils/BadPropsException';
 
-/* RenderedIcon is a helper component (not exported) that houses the logic
+/* RenderedSymbol is a helper component (not exported) that houses the logic
 necessary to prepare and (if necessary) add margin to the chosen icon. */
 
-type RenderedIconProps = {
+type RenderedSymbolProps = {
   icon: MaterialSymbolProps['icon'];
   nearText: boolean;
   iconSide?: 'left' | 'right';
 };
 
-const RenderedIcon: React.FC<RenderedIconProps> = ({
+const RenderedSymbol: React.FC<RenderedSymbolProps> = ({
   icon,
   nearText,
   iconSide
@@ -57,15 +57,17 @@ const RenderedIcon: React.FC<RenderedIconProps> = ({
     }
   }
   // Size is in pixels, weight is like thickness
-  return <Icon icon={icon} size={32} weight={500} className={margin} />;
+  return (
+    <MaterialSymbol icon={icon} size={32} weight={500} className={margin} />
+  );
 };
 
-RenderedIcon.defaultProps = {
+RenderedSymbol.defaultProps = {
   iconSide: 'left'
 };
 
 /* Button is the main component to be exported. It leverages
-RenderedIcon and conforms to the documentation above. */
+RenderedSymbol and conforms to the documentation above. */
 
 type ButtonProps = {
   appearance: 'primary' | 'secondary' | 'danger';
@@ -105,7 +107,7 @@ const Button: React.FC<ButtonProps> = ({
   if (appearance === 'primary') {
     buttonStyles += 'text-white bg-brand ';
   } else if (appearance === 'secondary') {
-    buttonStyles += 'text-brand bg-white border-[3px] border-brand ';
+    buttonStyles += 'text-brand bg-white border-3 border-brand ';
   } else {
     buttonStyles += 'text-white bg-danger ';
   }
@@ -133,7 +135,7 @@ const Button: React.FC<ButtonProps> = ({
         <button type="button" className={buttonStyles} onClick={clickHandler}>
           <div className={innerStyles}>
             {text}
-            <RenderedIcon
+            <RenderedSymbol
               icon={icon}
               nearText={text !== undefined}
               iconSide={iconSide}
@@ -145,7 +147,7 @@ const Button: React.FC<ButtonProps> = ({
     return (
       <button type="button" className={buttonStyles} onClick={clickHandler}>
         <div className={innerStyles}>
-          <RenderedIcon
+          <RenderedSymbol
             icon={icon}
             nearText={text !== undefined}
             iconSide={iconSide}
