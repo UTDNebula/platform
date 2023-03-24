@@ -10,7 +10,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Button } from 'components/src';
+import { Button, HoverableHint } from 'components';
 import { NextPage } from 'next';
 
 function doAlert() {
@@ -18,6 +18,22 @@ function doAlert() {
 }
 const ComponentsDemo: NextPage = () => (
   <div className="m-2">
+    <HoverableHint hintPosition="bottom-right">
+      <p>
+        Use this API Key to familiarize yourself with Nebula’s public-facing API
+        endpoints and to perform testing during development. You’ll have access
+        to it for as long as you are opted into Developer Portal.
+      </p>
+    </HoverableHint>
+    <div className="float-right">
+      <HoverableHint hintPosition="bottom-left">
+        <p>
+          Use this API Key to familiarize yourself with Nebula’s public-facing
+          API endpoints and to perform testing during development. You’ll have
+          access to it for as long as you are opted into Developer Portal.
+        </p>
+      </HoverableHint>
+    </div>
     <div className="flex align-center space-x-2">
       <Link href="/">
         <Button appearance="primary" text="Go Home" />
@@ -52,6 +68,22 @@ const ComponentsDemo: NextPage = () => (
       text="Alert!"
       icon="warning"
     />
+    <HoverableHint hintPosition="top-right">
+      <p>
+        Use this API Key to familiarize yourself with Nebula’s public-facing API
+        endpoints and to perform testing during development. You’ll have access
+        to it for as long as you are opted into Developer Portal.
+      </p>
+    </HoverableHint>
+    <div className="float-right">
+      <HoverableHint hintPosition="top-left">
+        <p>
+          Use this API Key to familiarize yourself with Nebula’s public-facing
+          API endpoints and to perform testing during development. You’ll have
+          access to it for as long as you are opted into Developer Portal.
+        </p>
+      </HoverableHint>
+    </div>
   </div>
 );
 

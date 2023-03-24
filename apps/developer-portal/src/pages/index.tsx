@@ -13,7 +13,7 @@
 import React from 'react';
 import { NextPage } from 'next';
 import Link from 'next/link';
-import { Button } from 'components/src';
+import { Button } from 'components';
 import trpc from '../utils/trpc';
 
 const Home: NextPage = () => {

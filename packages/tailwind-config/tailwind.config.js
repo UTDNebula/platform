@@ -2,6 +2,9 @@ module.exports = {
   content: ["../../packages/components/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
+      borderWidth: {
+        '3': '3px',
+      },
       colors: {
         'brand': '#4659a7',
         'danger': '#f24153'

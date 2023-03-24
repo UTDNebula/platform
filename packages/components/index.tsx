@@ -10,7 +10,8 @@
  * (Nebula Platform CS Project) starting March 21, 2023
  */
 
-import Button from './components/Button';
+import Button from './src/components/Button';
+import HoverableHint from './src/components/HoverableHint';
 
 // eslint-disable-next-line import/prefer-default-export
-export { Button };
+export { Button, HoverableHint };

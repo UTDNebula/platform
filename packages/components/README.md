@@ -5,7 +5,7 @@
 ## Structure
 
 - Each of the `src/components/*.tsx` files contains a React component that can be imported from any and all of the `apps` in this monorepo.
-- `src/index.tsx` collects all of the default exports from all the other `.tsx` files so that they can be imported correctly in `apps`.
+- `index.tsx` collects all of the default exports from all the other `.tsx` files so that they can be imported correctly in `apps`.
 - Helper files are contained within `src/utils`.
 
 ## Package Manager
