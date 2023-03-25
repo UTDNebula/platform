@@ -10,7 +10,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Button, DialogBox, HoverableHint } from 'components';
+import { Button, DialogBox, Dropdown, HoverableHint } from 'components';
 import { NextPage } from 'next';
 
 function doAlert() {
@@ -19,6 +19,9 @@ function doAlert() {
 const ComponentsDemo: NextPage = () => {
   const [dialogBoxOpen, setDialogBoxOpen] = React.useState(false);
   const [dangerLogBoxOpen, setDangerLogBoxOpen] = React.useState(false);
+  const [dropdownSelection, setDropdownSelection] = React.useState<
+    number | undefined
+  >(undefined);
   return (
     <div className="m-2">
       <HoverableHint hintPosition="bottom-right">
@@ -127,6 +130,19 @@ const ComponentsDemo: NextPage = () => {
           </p>
         </DialogBox>
       )}
+      <div className="mt-3" />
+      <Dropdown
+        onChange={(newSelection: number) => setDropdownSelection(newSelection)}
+        options={[
+          'First option',
+          'Second option',
+          'Third option',
+          'Fourth option'
+        ]}
+        hint="Select one, or don't, I'm not your dad..."
+        selected={dropdownSelection}
+      />
+      <Button appearance="primary" text="Hello" />
     </div>
   );
 };
