@@ -1,7 +1,6 @@
 /*
  * Hoverable Hint Component
  *
- * Exports
  * Exports a function component that renders a styled and working
  * <HoverableHint>. A <HoverableHint> is a question mark icon that reveals
  * a floating, non-modal dialog consisting of its child element(s) when hovered
@@ -12,7 +11,9 @@
  *                           non-modal dialog should appear. can be 'top left',
  *                           'top right', 'bottom left', or 'bottom right'.
  *                           the default is 'bottom-right'.
- * children (optional) - the contents of the floating, non-modal dialog.
+ * children (optional*) - the contents of the floating, non-modal dialog.
+ * NOTE: children must be optional for React to work correctly. However, not
+ *       supplying children to this component will cause a BadPropsException.
  *
  * Written by Daniel "Ludo" DeAnda (dcd180001) for CS4485.0W1
  * (Nebula Platform CS Project) starting March 21, 2023
