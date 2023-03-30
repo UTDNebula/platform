@@ -8,7 +8,7 @@
  * Clicking on an unexpanded <Dropdown> expands it, causing all options to be
  * displayed. When an option is moused over, its bounding rectangle becomes
  * shaded. <Dropdown>s can optionally have header text, which is rendered in
- * normal-weight Roboto. If this header text exists, it can optionally be
+ * normal-weight Jost. If this header text exists, it can optionally be
  * accompanied by a <HoverableHint>, which appears to the right of it. Finally,
  * <Dropdown>s get their options from, learn which option is currently selected,
  * and send updates about selection changes to their parent elements via the
@@ -43,6 +43,7 @@
 import React from 'react';
 import MaterialSymbol from 'react-material-symbols/outlined';
 import BadPropsException from '../utils/BadPropsException';
+import HoverableHint from './HoverableHint';
 
 type DropdownProps = {
   options: string[];
@@ -69,19 +70,37 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   const [expanded, setExpanded] = React.useState(false);
 
+  // Establish styles that are used regardless of appearance and spread
   let topStyles =
     'absolute top-0 left-0 w-full bg-neutral-300 rounded-lg text-xl';
 
+  // Adjust text color based on whether an option is selected
   if (selected === undefined) {
     topStyles += ' text-neutral-600';
   } else {
     topStyles += ' text-black';
   }
 
-  // Still render if no vertical movement is necessary
   return (
     <>
-      <div className="relative w-full h-13">
+      {/* Include a header if one is supplied */}
+      {header !== undefined && (
+        <div className="flex flex-row gap-x-1 ">
+          <p className="font-jost text-xl ml-1 mb-1.5">{header}</p>
+          {/* Include a hoverable hint next to the header if one is supplied */}
+          {headerHint !== undefined && (
+            <div className="mt-0.5">
+              <HoverableHint hintPosition="top-right">
+                {headerHint}
+              </HoverableHint>
+            </div>
+          )}
+        </div>
+      )}
+      {/* Specify w and h to ensure that, when expanded, the space occupied by
+          this component in the normal flow of the document will not change */}
+      <div className="relative w-full h-13 font-roboto">
+        {/* Render the top part of the dropdown (always visible) */}
         <div className={topStyles}>
           <button
             type="button"
@@ -89,6 +108,7 @@ const Dropdown: React.FC<DropdownProps> = ({
             onClick={() => setExpanded(!expanded)}
           >
             <div className="flex flex-row justify-between p-3 pl-4">
+              {/* Show hint or selected option text, as applicable */}
               {selected === undefined ? hint : options[selected]}
               <MaterialSymbol
                 icon={expanded ? 'expand_less' : 'expand_more'}
@@ -98,9 +118,12 @@ const Dropdown: React.FC<DropdownProps> = ({
               />
             </div>
           </button>
+          {/* Render the expandable part of the dropdown (not always visible) */}
           {expanded && (
             <>
+              {/* Divider line */}
               <div className="h-[1px] w-full bg-neutral-600 mb-2" />
+              {/* For each option... */}
               {options.map((option, index) => {
                 let rowStyles =
                   'w-full flex flex-row justify-between text-lg text-black hover:bg-neutral-400 p-2 pl-4';
@@ -119,6 +142,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                     }}
                   >
                     {option}
+                    {/* Check mark if option is currently selected */}
                     {index === selected && (
                       <MaterialSymbol
                         icon="done"
