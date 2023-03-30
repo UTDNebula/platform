@@ -6,12 +6,15 @@ module.exports = {
         '3': '3px',
       },
       colors: {
-        'brand': '#4659a7',
-        'danger': '#f24153'
+        'haiti': '#090b2c', // brand black
+        'persimmon': '#ff5743', // brand accent, danger
+        'royal': '#573dff', // brand secondary (dark)
+        'cornflower': '#6266fa', // brand primary
+        'periwinkle': '#c2c8ff', // brand secondary (light)
       },
       fontFamily: {
-        'roboto': ['Roboto', 'sans-serif'],
-        'jost': ['Jost', 'Roboto', 'sans-serif']
+        'kallisto': ['var(--font-kallisto)', 'Roboto', 'sans-serif'],
+        'inter': ['var(--font-inter)', 'Roboto', 'sans-serif']
       },
       height: {
         '13': '3.25rem'

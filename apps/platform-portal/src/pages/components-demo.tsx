@@ -24,6 +24,8 @@ const ComponentsDemo: NextPage = () => {
   >(undefined);
   return (
     <div className="m-2">
+      <p>I'm Inter</p>
+      <p className="font-kallisto">I'm Kallisto</p>
       <HoverableHint hintPosition="bottom-right">
         <p>
           Use this API Key to familiarize yourself with Nebula’s public-facing
@@ -142,11 +144,13 @@ const ComponentsDemo: NextPage = () => {
         hint="Select one, or don't, I'm not your dad..."
         selected={dropdownSelection}
         header="Display name"
-        headerHint={<p>
-          Use this API Key to familiarize yourself with Nebula’s public-facing
-          API endpoints and to perform testing during development. You’ll have
-          access to it for as long as you are opted into Developer Portal.
-        </p>}
+        headerHint={
+          <p>
+            Use this API Key to familiarize yourself with Nebula’s public-facing
+            API endpoints and to perform testing during development. You’ll have
+            access to it for as long as you are opted into Developer Portal.
+          </p>
+        }
       />
       <Button appearance="primary" text="Hello" />
     </div>
