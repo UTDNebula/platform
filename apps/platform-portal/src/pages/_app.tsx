@@ -79,7 +79,9 @@ const kallisto = localFont({
 
 // The App is the starting point for any NextJS application.
 const App: AppType = ({ Component, pageProps }: AppProps) => (
-  <main className={`${kallisto.variable} ${inter.variable} font-inter`}>
+  <main
+    className={`${kallisto.variable} ${inter.variable} font-inter text-haiti`}
+  >
     <Component {...pageProps} />
   </main>
 );

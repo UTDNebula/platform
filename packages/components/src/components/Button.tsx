@@ -21,14 +21,14 @@
  *                    that this <Button> should contain.
  * iconSide (optional) - if text and an icon are included, the side
  *                       of the text on which the icon should appear.
+ *                       can be either 'left' or 'right'; 'left' by default.
  * action (optional) - the function that this <Button> will call when clicked.
  *                     note that buttons can act as links by wrapping them with
  *                     a NextJS <Link>, so they do not need actions.
  * disabled (optional) - true if this button should be inoperable, false or
  *                       unspecified if it should work.
-
- *                       can be either 'left' or 'right'; 'left' by default.
  * NOTE: at least one of {text, icon} must be supplied.
+ *       supplying neither will cause a BadPropsException.
  *
  * Written by Daniel "Ludo" DeAnda (dcd180001) for CS4485.0W1
  * (Nebula Platform CS Project) starting March 21, 2023
@@ -45,25 +45,10 @@ necessary to prepare and (if necessary) add margin to the chosen icon. */
 type RenderedSymbolProps = {
   icon: MaterialSymbolProps['icon'];
   isSmall?: boolean;
-  nearText?: boolean;
-  iconSide?: 'left' | 'right';
 };
 
-const RenderedSymbol: React.FC<RenderedSymbolProps> = ({
-  icon,
-  isSmall,
-  nearText,
-  iconSide
-}) => {
+const RenderedSymbol: React.FC<RenderedSymbolProps> = ({ icon, isSmall }) => {
   let margin = '';
-  // Separate the icon and the text
-  if (nearText) {
-    if (iconSide === 'left') {
-      margin = 'mr-1.5';
-    } else {
-      margin = 'ml-1.5';
-    }
-  }
   // Size is in pixels, weight is like thickness
   return (
     <MaterialSymbol
@@ -76,9 +61,7 @@ const RenderedSymbol: React.FC<RenderedSymbolProps> = ({
 };
 
 RenderedSymbol.defaultProps = {
-  isSmall: false,
-  nearText: false,
-  iconSide: 'left'
+  isSmall: false
 };
 
 /* Button is the main component to be exported. It leverages
@@ -114,52 +97,132 @@ const Button: React.FC<ButtonProps> = ({
   }
 
   function clickHandler() {
-    if (action !== undefined) {
+    if (action !== undefined && (disabled === undefined || !disabled)) {
       action();
     }
   }
 
-  // Establish styles that are used regardless of appearance and spread
-  let buttonStyles = 'font-inter font-normal rounded-md box-border';
+  // Establish styles that are used regardless of props
+  let buttonStyles = 'font-inter font-medium rounded-md box-border';
   let innerStyles = 'flex justify-center items-center';
 
-  // Base styles on size prop
-  if (size === 'sm') {
-    buttonStyles += ' px-5 py-3';
+  /* Choose font size, height, and padding based on size prop (padding is
+   * different for inline-link type buttons). Specifying a height is
+   * required for box-border to work; we use what it would be anyway. */
+  const addPaddingX = type !== 'inline-link';
+  if (size === 'lg') {
+    buttonStyles += ' text-base h-12 py-3' + (addPaddingX ? ' px-5' : '');
+    innerStyles += ' gap-x-2';
   } else if (size === 'md') {
-    buttonStyles += ' px-4 py-2.5';
+    buttonStyles += ' text-sm h-10 py-2.5' + (addPaddingX ? ' px-4' : '');
+    innerStyles += ' gap-x-1.5';
   } else {
-    buttonStyles += ' px-3 py-1.5';
+    buttonStyles += ' text-xs h-8 py-2' + (addPaddingX ? ' px-3' : '');
+    innerStyles += ' gap-x-1.5';
   }
 
-  // Base styles on type, danger, and disabled props
-  if (!disabled) {
-    if (!danger) {
-      if (type === 'primary') {
+  // Choose colors and shades based on danger, type, and disabled props
+  if (!danger) {
+    if (type === 'primary') {
+      buttonStyles += ' text-white';
+      if (disabled) {
+        buttonStyles += ' bg-cornflower-300';
+      } else {
         buttonStyles +=
-          ' bg-cornflower text-white hover:bg-royal active:text-periwinkle';
-      } else if (type === 'secondary') {
-        buttonStyles += ' ';
+          ' bg-cornflower-500 text-white hover:bg-cornflower-600 active:text-cornflower-200';
+      }
+    } else if (type === 'secondary') {
+      buttonStyles += ' bg-cornflower-50';
+      if (disabled) {
+        buttonStyles += ' text-cornflower-300';
+      } else {
+        buttonStyles +=
+          ' text-cornflower-500 hover:bg-cornflower-100 hover:text-cornflower-600 active:bg-cornflower-100 active:text-cornflower-500';
+      }
+    } else if (type === 'tertiary') {
+      buttonStyles += ' border border-neutral-200 bg-white';
+      if (disabled) {
+        buttonStyles += ' text-neutral-400';
+      } else {
+        buttonStyles +=
+          ' text-neutral-700 bg-white hover:border-neutral-300 active:text-neutral-500';
+      }
+    } else if (type === 'outlined') {
+      buttonStyles += ' border bg-white';
+      if (disabled) {
+        buttonStyles += ' border-cornflower-300 text-cornflower-300';
+      } else {
+        buttonStyles +=
+          ' border-cornflower-500 text-cornflower-500 hover:border-cornflower-400 active:text-cornflower-400';
       }
     } else {
+      buttonStyles += ' bg-white';
+      if (disabled) {
+        buttonStyles += ' text-cornflower-300';
+      } else {
+        buttonStyles +=
+          ' text-cornflower-500 hover:text-cornflower-600 active:text-cornflower-400';
+      }
     }
-  }
-
-  // Base styles on spread prop
-  if (spread) {
-    buttonStyles += 'w-full';
   } else {
-    buttonStyles += 'w-fit';
-  }
-
-  // Base styles on iconSide prop
-  if (text && icon) {
-    if (iconSide === 'right') {
-      innerStyles += ' ml-1';
+    if (type === 'primary') {
+      buttonStyles += ' text-white';
+      if (disabled) {
+        buttonStyles += ' bg-persimmon-300';
+      } else {
+        buttonStyles +=
+          ' bg-persimmon-500 text-white hover:bg-persimmon-600 active:text-persimmon-200';
+      }
+    } else if (type === 'secondary') {
+      buttonStyles += ' bg-persimmon-50';
+      if (disabled) {
+        buttonStyles += ' text-persimmon-300';
+      } else {
+        buttonStyles +=
+          ' text-persimmon-500 hover:bg-persimmon-100 hover:text-persimmon-600 active:bg-persimmon-100 active:text-persimmon-500';
+      }
+    } else if (type === 'tertiary') {
+      buttonStyles += ' border border-persimmon-200 bg-white';
+      if (disabled) {
+        buttonStyles += ' text-persimmon-300';
+      } else {
+        buttonStyles +=
+          ' text-persimmon-500 bg-white hover:border-persimmon-300 hover:bg-persimmon-50 active:border-persimmon-300 active:bg-persimmon-50 active:text-persimmon-400';
+      }
+    } else if (type === 'outlined') {
+      buttonStyles += ' border bg-white';
+      if (disabled) {
+        buttonStyles += ' border-persimmon-300 text-persimmon-300';
+      } else {
+        buttonStyles +=
+          ' border-persimmon-500 text-persimmon-500 hover:border-persimmon-400 active:text-persimmon-400';
+      }
     } else {
-      innerStyles += ' mr-1';
+      buttonStyles += ' bg-white';
+      if (disabled) {
+        buttonStyles += ' text-persimmon-300';
+      } else {
+        buttonStyles +=
+          ' text-persimmon-500 hover:text-persimmon-600 active:text-persimmon-500';
+      }
     }
   }
+
+  // Choose width based on spread prop
+  if (spread) {
+    buttonStyles += ' w-full';
+  } else {
+    buttonStyles += ' w-fit';
+  }
+
+  // Choose balancing margin based on iconSide prop
+  // if (text && icon) {
+  //   if (iconSide === 'right') {
+  //     innerStyles += ' ml-0.5';
+  //   } else {
+  //     innerStyles += ' mr-0.5';
+  //   }
+  // }
 
   // Arrange the text and/or icon based on iconSide
   if (icon) {
@@ -168,11 +231,7 @@ const Button: React.FC<ButtonProps> = ({
         <button type="button" className={buttonStyles} onClick={clickHandler}>
           <div className={innerStyles}>
             {text}
-            <RenderedSymbol
-              icon={icon}
-              nearText={text !== undefined}
-              iconSide={iconSide}
-            />
+            <RenderedSymbol icon={icon} isSmall={size === 'sm'} />
           </div>
         </button>
       );
@@ -180,11 +239,7 @@ const Button: React.FC<ButtonProps> = ({
     return (
       <button type="button" className={buttonStyles} onClick={clickHandler}>
         <div className={innerStyles}>
-          <RenderedSymbol
-            icon={icon}
-            nearText={text !== undefined}
-            iconSide={iconSide}
-          />
+          <RenderedSymbol icon={icon} isSmall={size === 'sm'} />
           {text}
         </div>
       </button>

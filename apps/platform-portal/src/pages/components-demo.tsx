@@ -22,6 +22,10 @@ const ComponentsDemo: NextPage = () => {
   const [dropdownSelection, setDropdownSelection] = React.useState<
     number | undefined
   >(undefined);
+  const buttonSizes: Array<'sm' | 'md' | 'lg'> = ['sm', 'md', 'lg'];
+  const buttonTypes: Array<
+    'primary' | 'secondary' | 'tertiary' | 'outlined' | 'inline-link'
+  > = ['primary', 'secondary', 'tertiary', 'outlined', 'inline-link'];
   return (
     <div className="m-2">
       <p>I'm Inter</p>
@@ -33,7 +37,7 @@ const ComponentsDemo: NextPage = () => {
           access to it for as long as you are opted into Developer Portal.
         </p>
       </HoverableHint>
-      <div className="float-right">
+      <div className="ml-96">
         <HoverableHint hintPosition="bottom-left">
           <p>
             Use this API Key to familiarize yourself with Nebula’s public-facing
@@ -42,40 +46,80 @@ const ComponentsDemo: NextPage = () => {
           </p>
         </HoverableHint>
       </div>
-      <div className="flex align-center space-x-2">
-        <Link href="/">
-          <Button appearance="primary" text="Go Home" />
-        </Link>
-        <Link href="/">
-          <Button appearance="secondary" icon="home" />
-        </Link>
-      </div>
+      {[false, true].map((disabled, disabledIndex) => (
+        <div key={disabledIndex}>
+          {[false, true].map((danger, dangerIndex) => (
+            <div key={disabledIndex * 2 + dangerIndex}>
+              {buttonSizes.map((size) => (
+                <div
+                  key={disabledIndex * 2 + dangerIndex + size}
+                  className="flex space-x-2 m-2"
+                >
+                  {buttonTypes.map((type) => {
+                    if (disabled) {
+                      return (
+                        <Button
+                          key={disabledIndex * 2 + dangerIndex + size + type}
+                          size={size}
+                          type={type}
+                          danger={danger}
+                          text="Go Home"
+                          icon="home"
+                          disabled={disabled}
+                        />
+                      );
+                    } else {
+                      return (
+                        <Link href="/">
+                          <Button
+                            key={disabledIndex * 2 + dangerIndex + size + type}
+                            size={size}
+                            type={type}
+                            danger={danger}
+                            text="Go Home"
+                            icon="home"
+                            disabled={disabled}
+                          />
+                        </Link>
+                      );
+                    }
+                  })}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      ))}
       <Link href="/">
-        <Button appearance="danger" spread icon="home" iconSide="right" />
-      </Link>
-      <div className="flex align-center space-x-2">
         <Button
-          appearance="primary"
-          action={doAlert}
+          size="lg"
+          type="primary"
+          text="Go Home"
+          icon="home"
+          iconSide="right"
+          spread
+        />
+      </Link>
+      <div className="flex align-center space-x-2 my-2">
+        <Button
+          size="lg"
+          type="primary"
+          danger
           text="Alert!"
           icon="warning"
           iconSide="left"
+          action={doAlert}
         />
         <Button
-          appearance="secondary"
+          size="lg"
+          type="primary"
+          danger
+          icon="warning"
+          iconSide="left"
           action={doAlert}
-          text="Alert!"
-          icon="refresh"
-          iconSide="right"
+          disabled
         />
       </div>
-      <Button
-        appearance="primary"
-        action={doAlert}
-        spread
-        text="Alert!"
-        icon="warning"
-      />
       <HoverableHint hintPosition="top-right">
         <p>
           Use this API Key to familiarize yourself with Nebula’s public-facing
@@ -83,7 +127,7 @@ const ComponentsDemo: NextPage = () => {
           access to it for as long as you are opted into Developer Portal.
         </p>
       </HoverableHint>
-      <div className="float-right">
+      <div className="ml-96">
         <HoverableHint hintPosition="top-left">
           <p>
             Use this API Key to familiarize yourself with Nebula’s public-facing
@@ -93,7 +137,8 @@ const ComponentsDemo: NextPage = () => {
         </HoverableHint>
       </div>
       <Button
-        appearance="primary"
+        size="lg"
+        type="primary"
         action={() => setDialogBoxOpen(true)}
         text="Show Dialog Box"
         icon="preview"
@@ -113,7 +158,9 @@ const ComponentsDemo: NextPage = () => {
         </DialogBox>
       )}
       <Button
-        appearance="danger"
+        size="lg"
+        type="primary"
+        danger
         action={() => setDangerLogBoxOpen(true)}
         text="Show Dangerlog Box"
         icon="preview"
@@ -152,7 +199,6 @@ const ComponentsDemo: NextPage = () => {
           </p>
         }
       />
-      <Button appearance="primary" text="Hello" />
     </div>
   );
 };
