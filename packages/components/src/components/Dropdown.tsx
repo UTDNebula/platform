@@ -2,17 +2,20 @@
  * Dropdown Component
  *
  * Exports a function component that renders a styled and working <Dropdown>.
- * A <Dropdown> is an expandable menu that conforms to the width of its parent
- * element from which a single option can be chosen. While no option is
- * selected, <Dropdown>s display customizable hint text in place of an option.
- * Clicking on an unexpanded <Dropdown> expands it, causing all options to be
- * displayed. When an option is moused over, its bounding rectangle becomes
- * shaded. <Dropdown>s can optionally have header text, which is rendered in
- * normal-weight Jost. If this header text exists, it can optionally be
- * accompanied by a <HoverableHint>, which appears to the right of it. Finally,
- * <Dropdown>s get their options from, learn which option is currently selected,
- * and send updates about selection changes to their parent elements via the
- * options, selected, and onChange props, respectively.
+ * A <Dropdown> is an expandable menu from which a single option can be chosen.
+ * While no option is selected, <Dropdown>s display customizable hint text in
+ * place of an option. Clicking on an unexpanded <Dropdown> expands it, causing
+ * all options to be displayed. When an option is moused over, its bounding
+ * rectangle becomes shaded. <Dropdown>s can optionally have header text, which
+ * is rendered in normal-weight text. If this header text exists, it can
+ * optionally be accompanied by a <HoverableHint>, which appears to the right
+ * of it. <Dropdown>s can also optionally have helper text; if supplied, it
+ * appears just below them and can be made into a link. <Dropdown>s get their
+ * options from, learn which option is currently selected, and send updates
+ * about selection changes to their parent elements via the options, selected,
+ * and onChange props, respectively. Finally, <Dropdown>s can be put into an
+ * error or disabled state (but not both; disabled takes priority) by setting
+ * the props of the same names to true.
  *
  * Props:
  * options (required) - the options that this <Dropdown> should display. they
@@ -33,8 +36,18 @@
  *                          the content of the <HoverableHint> for this
  *                          <Dropdown>'s header. the default is to not include
  *                          a <HoverableHint>.
- * NOTE: supplying a headerHint without specifying
- * header text will cause a BadPropsException.
+ * helperText (optional) - text that appears just below this <Dropdown> and
+ *                         is styled based on the other props. can be made into
+ *                         a link by supplying a helperTextLink.
+ * helperTextLink (optional*) - the href of a NextJS <Link> to be applied to
+ *                              the helperText of this <Dropdown>.
+ * error (optional) - true if this <Dropdown> should appear in an error state,
+ *                    false or unspecified otherwise.
+ * disabled (optional) - true if this <Dropdown> should not function, false or
+ *                       unspecified if it should work normally.
+ * NOTE: supplying a headerHint without specifying header text will cause a
+ * BadPropsException. so will supplying a helperTextLink without supplying
+ * helperText.
  *
  * Written by Daniel "Ludo" DeAnda (dcd180001) for CS4485.0W1
  * (Nebula Platform CS Project) starting March 21, 2023
@@ -52,6 +65,10 @@ type DropdownProps = {
   selected?: number;
   header?: string;
   headerHint?: React.ReactNode;
+  helperText?: string;
+  helperTextLink?: string;
+  error?: boolean;
+  disabled?: boolean;
 };
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -60,7 +77,11 @@ const Dropdown: React.FC<DropdownProps> = ({
   hint,
   selected,
   header,
-  headerHint
+  headerHint,
+  helperText,
+  helperTextLink,
+  error,
+  disabled
 }) => {
   if (headerHint !== undefined && header === undefined) {
     throw new BadPropsException(
@@ -70,15 +91,23 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   const [expanded, setExpanded] = React.useState(false);
 
-  // Establish styles that are used regardless of appearance and spread
-  let topStyles =
-    'absolute top-0 left-0 w-full bg-neutral-300 rounded-lg text-xl';
+  // Establish styles that are used regardless of selection and expanded status
+  let footprintStyles =
+    'absolute top-0 left-0 w-full bg-white border border-neutral-200 rounded-md shadow-sm shadow-shaded text-tahiti';
+  let rowStyles = 'flex flex-row justify-between items-center px-3 py-2.5 text-sm';
+  let topStyles = rowStyles + ' hover:bg-neutral-50 active:bg-neutral-100';
+  let expandableRowStyles = rowStyles + ' w-full hover:bg-neutral-100 active:bg-neutral-200';
 
   // Adjust text color based on whether an option is selected
   if (selected === undefined) {
-    topStyles += ' text-neutral-600';
+    topStyles += ' text-neutral-400';
+  }
+
+  // Adjust top row corner rounding based on expanded status
+  if (expanded) {
+    topStyles += ' rounded-t-md';
   } else {
-    topStyles += ' text-black';
+    topStyles += ' rounded-md';
   }
 
   return (
@@ -86,10 +115,10 @@ const Dropdown: React.FC<DropdownProps> = ({
       {/* Include a header if one is supplied */}
       {header !== undefined && (
         <div className="flex flex-row gap-x-1 ">
-          <p className="font-jost text-xl ml-1 mb-1.5">{header}</p>
+          <p className="text-sm font-medium mb-1">{header}</p>
           {/* Include a hoverable hint next to the header if one is supplied */}
           {headerHint !== undefined && (
-            <div className="mt-0.5">
+            <div className="">
               <HoverableHint hintPosition="top-right">
                 {headerHint}
               </HoverableHint>
@@ -99,22 +128,22 @@ const Dropdown: React.FC<DropdownProps> = ({
       )}
       {/* Specify w and h to ensure that, when expanded, the space occupied by
           this component in the normal flow of the document will not change */}
-      <div className="relative w-full h-13 font-roboto">
-        {/* Render the top part of the dropdown (always visible) */}
-        <div className={topStyles}>
+      <div className="relative w-96 h-10">
+        <div className={footprintStyles}>
+          {/* Render the top part of the dropdown (always visible) */}
           <button
             type="button"
             className="w-full"
             onClick={() => setExpanded(!expanded)}
           >
-            <div className="flex flex-row justify-between p-3 pl-4">
+            <div className={topStyles}>
               {/* Show hint or selected option text, as applicable */}
               {selected === undefined ? hint : options[selected]}
               <MaterialSymbol
                 icon={expanded ? 'expand_less' : 'expand_more'}
-                size={24}
+                size={20}
                 weight={500}
-                className="mt-3px"
+                className="text-neutral-500"
               />
             </div>
           </button>
@@ -122,20 +151,18 @@ const Dropdown: React.FC<DropdownProps> = ({
           {expanded && (
             <>
               {/* Divider line */}
-              <div className="h-[1px] w-full bg-neutral-600 mb-2" />
+              <div className="h-[1px] w-full bg-neutral-200" />
               {/* For each option... */}
               {options.map((option, index) => {
-                let rowStyles =
-                  'w-full flex flex-row justify-between text-lg text-black hover:bg-neutral-400 p-2 pl-4';
                 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
                 if (index === options.length - 1) {
-                  rowStyles += ' mb-3';
+                  expandableRowStyles += ' rounded-b-md';
                 }
                 return (
                   <button
                     key={option}
                     type="button"
-                    className={rowStyles}
+                    className={expandableRowStyles}
                     onClick={() => {
                       onChange(index);
                       setExpanded(false);
@@ -146,9 +173,9 @@ const Dropdown: React.FC<DropdownProps> = ({
                     {index === selected && (
                       <MaterialSymbol
                         icon="done"
-                        size={24}
+                        size={20}
                         weight={500}
-                        className="mt-3px mr-1"
+                        className="text-neutral-500"
                       />
                     )}
                   </button>
@@ -166,7 +193,11 @@ Dropdown.defaultProps = {
   hint: 'Select one...',
   selected: undefined,
   header: undefined,
-  headerHint: undefined
+  headerHint: undefined,
+  helperText: undefined,
+  helperTextLink: undefined,
+  error: false,
+  disabled: false
 };
 
 export default Dropdown;

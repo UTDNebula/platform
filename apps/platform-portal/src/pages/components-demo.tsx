@@ -147,14 +147,20 @@ const ComponentsDemo: NextPage = () => {
       {dialogBoxOpen && (
         <DialogBox
           onClose={() => setDialogBoxOpen(false)}
-          header="Welcome to My Dialog"
+          appearance="wide"
         >
-          <p className="font-roboto text-xl">
-            Here, you can immediately and permanently delete your entire Nebula
-            Labs account, including all account data. Note that this action will
-            sign you out of all Nebula Labs services and cannot be undone. To
-            confirm, and to verify that it’s you, please re-enter your password.
-          </p>
+          <div className="flex flex-col gap-y-8">
+            <p className="text-sm text-neutral-500">
+              Here, you can immediately and permanently delete your entire Nebula
+              Labs account, including all account data. Note that this action will
+              sign you out of all Nebula Labs services and cannot be undone. To
+              confirm, and to verify that it’s you, please re-enter your password.
+            </p>
+            <div className="flex flex-row justify-end gap-x-3">
+              <Button size="md" type="tertiary" text="Action" />
+              <Button size="md" type="primary" text="Action" />
+            </div>
+          </div>
         </DialogBox>
       )}
       <Button
@@ -169,14 +175,23 @@ const ComponentsDemo: NextPage = () => {
       {dangerLogBoxOpen && (
         <DialogBox
           onClose={() => setDangerLogBoxOpen(false)}
-          appearance="danger"
+          icon="warning"
+          header="Welcome to My Dialog"
+          appearance="slim"
+          danger
         >
-          <p className="font-roboto text-xl">
-            Here, you can immediately and permanently delete your entire Nebula
-            Labs account, including all account data. Note that this action will
-            sign you out of all Nebula Labs services and cannot be undone. To
-            confirm, and to verify that it’s you, please re-enter your password.
-          </p>
+          <div className="flex flex-col gap-y-8">
+            <p className="text-sm text-neutral-500">
+              Here, you can immediately and permanently delete your entire Nebula
+              Labs account, including all account data. Note that this action will
+              sign you out of all Nebula Labs services and cannot be undone. To
+              confirm, and to verify that it’s you, please re-enter your password.
+            </p>
+            <div className="flex flex-col gap-y-3">
+              <Button size="md" type="tertiary" spread text="Action" />
+              <Button size="md" type="primary" spread text="Action" danger />
+            </div>
+          </div>
         </DialogBox>
       )}
       <div className="mt-3" />

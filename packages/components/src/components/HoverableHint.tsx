@@ -3,8 +3,8 @@
  *
  * Exports a function component that renders a styled and working
  * <HoverableHint>. A <HoverableHint> is a question mark icon that reveals
- * a floating, non-modal dialog consisting of its child element(s) when hovered
- * over. The revealed element(s) is/are located just below the icon.
+ * a modified tooltip (non-modal dialog) consisting of its child element(s)
+ * when hovered over.
  *
  * Props:
  * hintPosition (optional) - the side of the hint icon on which the floating,
@@ -42,7 +42,7 @@ const HoverableHint: React.FC<HoverableHintProps> = ({
 
   // Establish styles that are used regardless of appearance and spread
   let hintStyles =
-    'absolute w-72 p-3 bg-white border-3 border-black rounded-xl';
+    'absolute w-80 p-4 text-neutral-700 bg-white rounded-lg shadow-lg shadow-shade';
 
   // Show/hide hint dialog based on hover status
   if (visible) {
@@ -53,7 +53,7 @@ const HoverableHint: React.FC<HoverableHintProps> = ({
 
   // Move the dialog to the left if needed (right is default for absolute)
   if (hintPosition === 'top-left' || hintPosition === 'bottom-left') {
-    hintStyles += ' right-[calc(100%-24px)]';
+    hintStyles += ' right-[calc(100%-20px)]';
   }
 
   // Move the dialog up if needed (bottom is default for absolute) and render
@@ -64,7 +64,7 @@ const HoverableHint: React.FC<HoverableHintProps> = ({
         <div className={hintStyles}>{children}</div>
         <MaterialSymbol
           icon="help"
-          size={24}
+          size={20}
           weight={500}
           onMouseOver={() => setVisible(true)}
           onMouseOut={() => setVisible(false)}
@@ -78,7 +78,7 @@ const HoverableHint: React.FC<HoverableHintProps> = ({
     <div className="relative">
       <MaterialSymbol
         icon="help"
-        size={24}
+        size={20}
         weight={500}
         onMouseOver={() => setVisible(true)}
         onMouseOut={() => setVisible(false)}

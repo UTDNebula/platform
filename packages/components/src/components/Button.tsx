@@ -11,7 +11,7 @@
  * size (required) - the size of this <Button>. can be 'sm', 'md', or 'lg'.
  * type (required) - the design role played by this <Button>. can be 'primary',
  *                   'secondary', or 'tertiary', 'outlined', or 'inline-link'.
- * danger (optional) - true if this button is associated with a destructive
+ * danger (optional) - true if this <Button> is associated with a destructive
  *                     action, false or unspecified if not.
  * spread (optional) - true if this <Button> should conform to the width of its
  *                     parent element (contents centered), false or unspecified

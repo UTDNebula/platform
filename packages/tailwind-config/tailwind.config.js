@@ -33,10 +33,14 @@ module.exports = {
           900: '#28254d'
         }, 
         'periwinkle': '#c2c8ff', // brand secondary (light)
+        'shade': '#101828' // drop shadow color from shipfaster ui
       },
       fontFamily: {
         'kallisto': ['var(--font-kallisto)', 'Roboto', 'sans-serif'],
         'inter': ['var(--font-inter)', 'Roboto', 'sans-serif']
+      },
+      width: {
+        'wide': '32rem'
       },
       height: {
         '13': '3.25rem'
