@@ -100,7 +100,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   // Establish styles that are used regardless of selection and expanded status
   let headerStyles = 'text-sm font-medium mb-1';
   let dropdownStyles =
-    'absolute top-0 left-0 w-full bg-white border rounded-md shadow-sm shadow-shade/5 text-tahiti';
+    'absolute top-0 left-0 w-full bg-white border rounded-md shadow-sm shadow-shade/5';
   let rowStyles =
     'flex flex-row justify-between items-center px-3 py-2.5 text-sm';
   let topStyles = rowStyles + ' hover:bg-neutral-50 active:bg-neutral-100';
@@ -130,16 +130,16 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   // Adjust top row corner rounding based on expanded status
   if (expanded) {
-    topStyles += ' rounded-md';
+    topStyles += ' rounded-t-md';
   } else {
     topStyles += ' rounded-md';
   }
 
   return (
-    <div className="font-inter">
+    <div className="font-inter text-haiti w-96">
       {/* Include a header if one is supplied */}
       {header !== undefined && (
-        <div className="flex flex-row gap-x-1 ">
+        <div className="flex flex-row gap-x-1">
           <p className={headerStyles}>{header}</p>
           {/* Include a hoverable hint next to the header if one is supplied */}
           {headerHint !== undefined && (
@@ -151,7 +151,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       )}
       {/* Specify w and h to ensure that, when expanded, the space occupied by
           this component in the normal flow of the document will not change */}
-      <div className="relative w-96 h-10">
+      <div className="relative h-10">
         <div className={dropdownStyles}>
           {/* Render the top part of the dropdown (always visible) */}
           <button

@@ -9,7 +9,13 @@
  */
 
 import React from 'react';
-import { Button, DialogBox, Dropdown, HoverableHint } from 'components';
+import {
+  Button,
+  DialogBox,
+  Dropdown,
+  HoverableHint,
+  InputField
+} from 'components';
 import { NextPage } from 'next';
 import {
   ExclamationTriangleIcon,
@@ -26,6 +32,7 @@ const ComponentsDemo: NextPage = () => {
   const [dropdownSelection, setDropdownSelection] = React.useState<
     number | undefined
   >(undefined);
+  const [inputFieldContent, setInputFieldContent] = React.useState('');
   const buttonSizes: Array<'sm' | 'md' | 'lg'> = ['sm', 'md', 'lg'];
   const buttonTypes: Array<
     'primary' | 'secondary' | 'tertiary' | 'outlined' | 'inline-link'
@@ -69,6 +76,11 @@ const ComponentsDemo: NextPage = () => {
         }
         helperText="Don't like this?"
         helperTextLink="/"
+      />
+      <InputField
+        content={inputFieldContent}
+        onChange={(newContent: string) => setInputFieldContent(newContent)}
+        visibilityToggle
       />
       {[false, true].map((disabled, disabledIndex) => (
         <div key={disabledIndex}>

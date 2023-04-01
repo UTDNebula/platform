@@ -14,6 +14,7 @@ import Button from './src/components/Button';
 import DialogBox from './src/components/DialogBox';
 import Dropdown from './src/components/Dropdown';
 import HoverableHint from './src/components/HoverableHint';
+import InputField from './src/components/InputField';
 
 // eslint-disable-next-line import/prefer-default-export
-export { Button, DialogBox, Dropdown, HoverableHint };
+export { Button, DialogBox, Dropdown, HoverableHint, InputField };

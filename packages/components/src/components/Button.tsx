@@ -79,7 +79,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
     // NextJS <Link>s are for link actions
     return (
       <Link href={action} className="rounded-md">
-        {children}
+        <div className="block w-fit">{children}</div>
       </Link>
     );
   }
