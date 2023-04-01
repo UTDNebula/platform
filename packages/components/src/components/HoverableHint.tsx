@@ -22,7 +22,7 @@
  */
 
 import React from 'react';
-import MaterialSymbol from 'react-material-symbols/outlined';
+import { QuestionMarkCircleIcon } from '@heroicons/react/24/outline';
 import BadPropsException from '../utils/BadPropsException';
 
 type HoverableHintProps = {
@@ -66,13 +66,10 @@ const HoverableHint: React.FC<HoverableHintProps> = ({
     return (
       <div className="relative">
         <div className={hintStyles}>{children}</div>
-        <MaterialSymbol
-          icon="help"
-          size={20}
-          weight={500}
+        <QuestionMarkCircleIcon
           onMouseOver={() => setVisible(true)}
           onMouseOut={() => setVisible(false)}
-          className={grayed ? 'text-neutral-400' : 'text-haiti'}
+          className={grayed ? 'w-5 h-5 text-neutral-400' : 'w-5 h-5 text-haiti'}
         />
       </div>
     );
@@ -80,13 +77,11 @@ const HoverableHint: React.FC<HoverableHintProps> = ({
 
   // Still render if no vertical movement is necessary
   return (
-    <div className="relative">
-      <MaterialSymbol
-        icon="help"
-        size={20}
-        weight={500}
+    <div className="relative font-inter">
+      <QuestionMarkCircleIcon
         onMouseOver={() => setVisible(true)}
         onMouseOut={() => setVisible(false)}
+        className={grayed ? 'w-5 h-5 text-neutral-400' : 'w-5 h-5 text-haiti'}
       />
       <div className={hintStyles}>{children}</div>
     </div>

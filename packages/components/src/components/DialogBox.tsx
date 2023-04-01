@@ -21,10 +21,10 @@
  *                      the "X" icon that is a part of this <DialogBox>. it
  *                      should be used to remove this <DialogBox> from view and
  *                      should not accept any arguments.
- * icon (optional) - the icon that should be shown at the top of this
- *                   <DialogBox>. the default is an information icon.
+ * Icon (optional) - the heroicon component that should be shown at the top of
+ *                   this <DialogBox>. the default is an InformationCircle.
  * header (optional) - the header text for this <DialogBox>.
- *                     the default is 'Alert'.
+ *                     the default is 'Notice'.
  * appearance (optional) - the visual style of this <DialogBox>.
  *                         can be either 'wide' (default) or 'slim'.
  * danger (optional) - true if this <DialogBox> is associated with a
@@ -40,13 +40,13 @@
  */
 
 import React from 'react';
-import { MaterialSymbolProps } from 'react-material-symbols';
-import MaterialSymbol from 'react-material-symbols/outlined';
+import { XMarkIcon } from '@heroicons/react/20/solid';
+import { InformationCircleIcon } from '@heroicons/react/24/outline';
 import BadPropsException from '../utils/BadPropsException';
 
 type DialogBoxProps = {
   onClose: Function;
-  icon?: MaterialSymbolProps['icon'];
+  Icon?: React.ElementType;
   header?: string;
   appearance?: 'wide' | 'slim';
   danger?: boolean;
@@ -55,7 +55,7 @@ type DialogBoxProps = {
 
 const DialogBox: React.FC<DialogBoxProps> = ({
   onClose,
-  icon,
+  Icon,
   header,
   appearance,
   danger,
@@ -67,9 +67,9 @@ const DialogBox: React.FC<DialogBoxProps> = ({
 
   // Establish styles that are used regardless of appearance
   let boxStyles =
-    'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 p-6 bg-white rounded-md shadow-xl shadow-shade/10';
-  let iconCircleStyles = 'w-12 h-12 rounded-3xl mb-5';
-  let iconStyles = 'm-3';
+    'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 p-6 bg-white rounded-md shadow-xl shadow-shade/10 font-inter';
+  let iconCircleStyles = 'relative w-12 h-12 rounded-3xl mb-5';
+  let iconStyles = 'absolute top-3 left-3 w-6 h-6';
   let headerStyles = 'text-lg font-medium mb-2';
 
   // Choose border color based on appearance
@@ -96,22 +96,13 @@ const DialogBox: React.FC<DialogBoxProps> = ({
       {/* <div className="fixed left-0 top-0 w-full h-full bg-black opacity-50" /> */}
       {/* Dialog box proper */}
       <div className={boxStyles}>
-        <MaterialSymbol
-          icon="close"
-          size={20}
-          weight={400}
+        <XMarkIcon
           onClick={() => onClose()}
-          className="absolute top-6 right-6"
+          className="absolute top-6 right-6 w-5 h-5"
         />
-        {icon && (
+        {Icon && (
           <div className={iconCircleStyles}>
-            <MaterialSymbol
-              icon={icon}
-              size={24}
-              weight={400}
-              onClick={() => onClose()}
-              className={iconStyles}
-            />
+            <Icon className={iconStyles} />
           </div>
         )}
         <h2 className={headerStyles}>{header}</h2>
@@ -122,8 +113,8 @@ const DialogBox: React.FC<DialogBoxProps> = ({
 };
 
 DialogBox.defaultProps = {
-  icon: 'info',
-  header: 'Alert',
+  Icon: InformationCircleIcon,
+  header: 'Notice',
   appearance: 'wide',
   danger: false,
   children: undefined

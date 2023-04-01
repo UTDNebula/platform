@@ -8,9 +8,9 @@
     "lint": "eslint **/*.ts*"
   },
   "dependencies": {
+    "@heroicons/react": "^2.0.17",
     "next": "^13.1.1",
-    "react": "^18.2.0",
-    "react-material-symbols": "^2.0.2"
+    "react": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",

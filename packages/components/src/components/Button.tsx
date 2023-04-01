@@ -21,16 +21,15 @@
  *                     parent element (contents centered), false or unspecified
  *                     if it should conform to the width of its contents.
  * text (optional*) - the text that this <Button> should contain.
- * icon (optional*) - the name of the Material Symbol
- *                    that this <Button> should contain.
- * iconSide (optional) - if text and an icon are included, the side
- *                       of the text on which the icon should appear.
+ * Icon (optional*) - the heroicon component that this <Button> should contain.
+ * iconSide (optional) - if text and an Icon are included, the side
+ *                       of the text on which the Icon should appear.
  *                       can be either 'left' or 'right'; 'left' by default.
  *                     note that buttons can act as links by wrapping them with
  *                     a NextJS <Link>, so they do not need actions.
  * disabled (optional) - true if this button should be inoperable, false or
  *                       unspecified if it should work.
- * NOTE: at least one of {text, icon} must be supplied.
+ * NOTE: at least one of {text, Icon} must be supplied.
  *       supplying neither will cause a BadPropsException.
  *
  * Written by Daniel "Ludo" DeAnda (dcd180001) for CS4485.0W1
@@ -39,37 +38,10 @@
 
 import React from 'react';
 import Link from 'next/link';
-import MaterialSymbol from 'react-material-symbols/outlined';
-import { MaterialSymbolProps } from 'react-material-symbols';
 import BadPropsException from '../utils/BadPropsException';
 
-/* RenderedSymbol is a helper component (not exported) that houses the logic
-necessary to prepare and (if necessary) add margin to the chosen icon. */
-
-type RenderedSymbolProps = {
-  icon: MaterialSymbolProps['icon'];
-  isSmall?: boolean;
-};
-
-const RenderedSymbol: React.FC<RenderedSymbolProps> = ({ icon, isSmall }) => {
-  let margin = '';
-  // Size is in pixels, weight is like thickness
-  return (
-    <MaterialSymbol
-      icon={icon}
-      size={isSmall ? 16 : 20}
-      weight={400}
-      className={margin}
-    />
-  );
-};
-
-RenderedSymbol.defaultProps = {
-  isSmall: false
-};
-
 /* ButtonWrapper is a helper component (not exported) that houses the logic
-necessary to wrap the <Button> contents (i.e., the text and/or icon) with
+necessary to wrap the <Button> contents (i.e., the text and/or Icon) with
 either a <button> element or a <Link> element based on whether the <Button>
 action prop is a string or a Function. */
 
@@ -122,7 +94,7 @@ ButtonWrapper.defaultProps = {
 };
 
 /* Button is the main component to be exported. It leverages
-RenderedSymbol and conforms to the documentation above. */
+ButtonWrapper and conforms to the documentation above. */
 
 type ButtonProps = {
   size: 'sm' | 'md' | 'lg';
@@ -131,7 +103,7 @@ type ButtonProps = {
   danger?: boolean;
   spread?: boolean;
   text?: string;
-  icon?: MaterialSymbolProps['icon'];
+  Icon?: React.ElementType;
   iconSide?: 'left' | 'right';
   disabled?: boolean;
 };
@@ -143,19 +115,19 @@ const Button: React.FC<ButtonProps> = ({
   danger,
   spread,
   text,
-  icon,
+  Icon,
   iconSide,
   disabled
 }) => {
-  if (text === undefined && icon === undefined) {
+  if (text === undefined && Icon === undefined) {
     throw new BadPropsException(
-      'Buttons must have at least one of: {text, icon}.'
+      'Buttons must have at least one of: {text, Icon}.'
     );
   }
 
   // Establish styles that are used regardless of props
   let buttonStyles =
-    'flex justify-center items-center rounded-md font-medium box-border';
+    'flex justify-center items-center rounded-md font-inter font-medium box-border';
 
   /* Choose font size, height, and padding based on size prop (padding is
    * different for inline-link type buttons). Specifying a height is
@@ -267,7 +239,7 @@ const Button: React.FC<ButtonProps> = ({
   }
 
   // Choose balancing margin based on iconSide prop
-  // if (text && icon) {
+  // if (text && Icon) {
   //   if (iconSide === 'right') {
   //     buttonStyles += ' ml-0.5';
   //   } else {
@@ -275,14 +247,15 @@ const Button: React.FC<ButtonProps> = ({
   //   }
   // }
 
-  // Arrange the text and/or icon based on iconSide
-  if (icon) {
+  // Arrange the text and/or Icon based on iconSide
+  // Note: w-4 h-4 is 16px square, reduced from the default 20
+  if (Icon) {
     if (iconSide === 'right') {
       return (
         <ButtonWrapper action={action} disabled={disabled}>
           <div className={buttonStyles}>
             {text}
-            <RenderedSymbol icon={icon} isSmall={size === 'sm'} />
+            <Icon className={size === 'sm' ? 'w-4 h-4' : 'w-5 h-5'} />
           </div>
         </ButtonWrapper>
       );
@@ -290,7 +263,7 @@ const Button: React.FC<ButtonProps> = ({
     return (
       <ButtonWrapper action={action} disabled={disabled}>
         <div className={buttonStyles}>
-          <RenderedSymbol icon={icon} isSmall={size === 'sm'} />
+          <Icon className={size === 'sm' ? 'w-4 h-4' : 'w-5 h-5'} />
           {text}
         </div>
       </ButtonWrapper>
@@ -307,7 +280,7 @@ Button.defaultProps = {
   danger: false,
   spread: false,
   text: undefined,
-  icon: undefined,
+  Icon: undefined,
   iconSide: 'left',
   disabled: false
 };

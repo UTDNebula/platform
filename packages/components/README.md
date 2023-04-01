@@ -22,7 +22,7 @@
 
 - ESLint and Prettier are supported, and have been configured to match Nebula's opinionated style guide.
 - Tailwind CSS has been configured and is the preferred method for implementing any and all styling.
-- `react-material-symbols` are also available.
+- `heroicons` are also available.
 
 ## Other Files (You Don't Need to Touch These)
 - `.prettierrc.json` configures Prettier to match Nebula's opinionated style guide for this app.

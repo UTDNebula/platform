@@ -49,7 +49,11 @@
  */
 
 import React from 'react';
-import MaterialSymbol from 'react-material-symbols/outlined';
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronUpIcon
+} from '@heroicons/react/20/solid';
 import BadPropsException from '../utils/BadPropsException';
 import Button from './Button';
 import HoverableHint from './HoverableHint';
@@ -132,7 +136,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   }
 
   return (
-    <>
+    <div className="font-inter">
       {/* Include a header if one is supplied */}
       {header !== undefined && (
         <div className="flex flex-row gap-x-1 ">
@@ -162,12 +166,11 @@ const Dropdown: React.FC<DropdownProps> = ({
             <div className={topStyles}>
               {/* Show hint or selected option text, as applicable */}
               {selected === undefined ? hint : options[selected]}
-              <MaterialSymbol
-                icon={expanded ? 'expand_less' : 'expand_more'}
-                size={20}
-                weight={500}
-                className="text-neutral-500"
-              />
+              {expanded ? (
+                <ChevronUpIcon className="w-5 h-5 text-neutral-500" />
+              ) : (
+                <ChevronDownIcon className="w-5 h-5 text-neutral-500" />
+              )}
             </div>
           </button>
           {/* Render the expandable part of the dropdown (not always visible) */}
@@ -196,12 +199,7 @@ const Dropdown: React.FC<DropdownProps> = ({
                     {option}
                     {/* Check mark if option is currently selected */}
                     {index === selected && (
-                      <MaterialSymbol
-                        icon="done"
-                        size={20}
-                        weight={500}
-                        className="text-neutral-500"
-                      />
+                      <CheckIcon className="w-5 h-5 text-neutral-500" />
                     )}
                   </button>
                 );
@@ -226,7 +224,7 @@ const Dropdown: React.FC<DropdownProps> = ({
             text={helperText}
           />
         )}
-    </>
+    </div>
   );
 };
 

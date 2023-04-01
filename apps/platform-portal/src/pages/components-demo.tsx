@@ -11,6 +11,11 @@
 import React from 'react';
 import { Button, DialogBox, Dropdown, HoverableHint } from 'components';
 import { NextPage } from 'next';
+import {
+  ExclamationTriangleIcon,
+  HomeIcon,
+  WindowIcon
+} from '@heroicons/react/20/solid';
 
 function doAlert() {
   alert('Hi'); // eslint-disable-line no-alert
@@ -83,7 +88,7 @@ const ComponentsDemo: NextPage = () => {
                         action="/"
                         danger={danger}
                         text="Go Home"
-                        icon="home"
+                        Icon={HomeIcon}
                         disabled={disabled}
                       />
                     );
@@ -99,7 +104,7 @@ const ComponentsDemo: NextPage = () => {
         type="primary"
         action="/"
         text="Go Home"
-        icon="home"
+        Icon={HomeIcon}
         iconSide="right"
         spread
       />
@@ -109,7 +114,7 @@ const ComponentsDemo: NextPage = () => {
           type="primary"
           danger
           text="Alert!"
-          icon="warning"
+          Icon={ExclamationTriangleIcon}
           iconSide="left"
           action={doAlert}
         />
@@ -117,7 +122,7 @@ const ComponentsDemo: NextPage = () => {
           size="lg"
           type="primary"
           danger
-          icon="warning"
+          Icon={ExclamationTriangleIcon}
           iconSide="left"
           action={doAlert}
           disabled
@@ -144,7 +149,7 @@ const ComponentsDemo: NextPage = () => {
         type="primary"
         action={() => setDialogBoxOpen(true)}
         text="Show Dialog Box"
-        icon="preview"
+        Icon={WindowIcon}
         iconSide="right"
       />
       {dialogBoxOpen && (
@@ -170,13 +175,13 @@ const ComponentsDemo: NextPage = () => {
         danger
         action={() => setDangerLogBoxOpen(true)}
         text="Show Dangerlog Box"
-        icon="preview"
+        Icon={WindowIcon}
         iconSide="right"
       />
       {dangerLogBoxOpen && (
         <DialogBox
           onClose={() => setDangerLogBoxOpen(false)}
-          icon="warning"
+          Icon={ExclamationTriangleIcon}
           header="Welcome to My Dialog"
           appearance="slim"
           danger
