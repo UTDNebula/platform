@@ -8,6 +8,7 @@
     "lint": "eslint **/*.ts*"
   },
   "dependencies": {
+    "next": "^13.1.1",
     "react": "^18.2.0",
     "react-material-symbols": "^2.0.2"
   },

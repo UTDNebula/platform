@@ -9,7 +9,6 @@
  */
 
 import React from 'react';
-import Link from 'next/link';
 import { Button, DialogBox, Dropdown, HoverableHint } from 'components';
 import { NextPage } from 'next';
 
@@ -46,6 +45,27 @@ const ComponentsDemo: NextPage = () => {
           </p>
         </HoverableHint>
       </div>
+      <Dropdown
+        onChange={(newSelection: number) => setDropdownSelection(newSelection)}
+        options={[
+          'First option',
+          'Second option',
+          'Third option',
+          'Fourth option'
+        ]}
+        hint="Select one, or don't, I'm not your dad..."
+        selected={dropdownSelection}
+        header="Display name"
+        headerHint={
+          <p>
+            Use this API Key to familiarize yourself with Nebula’s public-facing
+            API endpoints and to perform testing during development. You’ll have
+            access to it for as long as you are opted into Developer Portal.
+          </p>
+        }
+        helperText="Don't like this?"
+        helperTextLink="/"
+      />
       {[false, true].map((disabled, disabledIndex) => (
         <div key={disabledIndex}>
           {[false, true].map((danger, dangerIndex) => (
@@ -56,33 +76,18 @@ const ComponentsDemo: NextPage = () => {
                   className="flex space-x-2 m-2"
                 >
                   {buttonTypes.map((type) => {
-                    if (disabled) {
-                      return (
-                        <Button
-                          key={disabledIndex * 2 + dangerIndex + size + type}
-                          size={size}
-                          type={type}
-                          danger={danger}
-                          text="Go Home"
-                          icon="home"
-                          disabled={disabled}
-                        />
-                      );
-                    } else {
-                      return (
-                        <Link href="/">
-                          <Button
-                            key={disabledIndex * 2 + dangerIndex + size + type}
-                            size={size}
-                            type={type}
-                            danger={danger}
-                            text="Go Home"
-                            icon="home"
-                            disabled={disabled}
-                          />
-                        </Link>
-                      );
-                    }
+                    return (
+                      <Button
+                        key={disabledIndex * 2 + dangerIndex + size + type}
+                        size={size}
+                        type={type}
+                        action="/"
+                        danger={danger}
+                        text="Go Home"
+                        icon="home"
+                        disabled={disabled}
+                      />
+                    );
                   })}
                 </div>
               ))}
@@ -90,16 +95,15 @@ const ComponentsDemo: NextPage = () => {
           ))}
         </div>
       ))}
-      <Link href="/">
-        <Button
-          size="lg"
-          type="primary"
-          text="Go Home"
-          icon="home"
-          iconSide="right"
-          spread
-        />
-      </Link>
+      <Button
+        size="lg"
+        type="primary"
+        action="/"
+        text="Go Home"
+        icon="home"
+        iconSide="right"
+        spread
+      />
       <div className="flex align-center space-x-2 my-2">
         <Button
           size="lg"
@@ -145,20 +149,18 @@ const ComponentsDemo: NextPage = () => {
         iconSide="right"
       />
       {dialogBoxOpen && (
-        <DialogBox
-          onClose={() => setDialogBoxOpen(false)}
-          appearance="wide"
-        >
+        <DialogBox onClose={() => setDialogBoxOpen(false)} appearance="wide">
           <div className="flex flex-col gap-y-8">
             <p className="text-sm text-neutral-500">
-              Here, you can immediately and permanently delete your entire Nebula
-              Labs account, including all account data. Note that this action will
-              sign you out of all Nebula Labs services and cannot be undone. To
-              confirm, and to verify that it’s you, please re-enter your password.
+              Here, you can immediately and permanently delete your entire
+              Nebula Labs account, including all account data. Note that this
+              action will sign you out of all Nebula Labs services and cannot be
+              undone. To confirm, and to verify that it’s you, please re-enter
+              your password.
             </p>
             <div className="flex flex-row justify-end gap-x-3">
-              <Button size="md" type="tertiary" text="Action" />
-              <Button size="md" type="primary" text="Action" />
+              <Button size="md" type="tertiary" action="/" text="Action" />
+              <Button size="md" type="primary" action="/" text="Action" />
             </div>
           </div>
         </DialogBox>
@@ -182,38 +184,32 @@ const ComponentsDemo: NextPage = () => {
         >
           <div className="flex flex-col gap-y-8">
             <p className="text-sm text-neutral-500">
-              Here, you can immediately and permanently delete your entire Nebula
-              Labs account, including all account data. Note that this action will
-              sign you out of all Nebula Labs services and cannot be undone. To
-              confirm, and to verify that it’s you, please re-enter your password.
+              Here, you can immediately and permanently delete your entire
+              Nebula Labs account, including all account data. Note that this
+              action will sign you out of all Nebula Labs services and cannot be
+              undone. To confirm, and to verify that it’s you, please re-enter
+              your password.
             </p>
             <div className="flex flex-col gap-y-3">
-              <Button size="md" type="tertiary" spread text="Action" />
-              <Button size="md" type="primary" spread text="Action" danger />
+              <Button
+                size="md"
+                type="tertiary"
+                action="/"
+                spread
+                text="Action"
+              />
+              <Button
+                size="md"
+                type="primary"
+                action="/"
+                spread
+                text="Action"
+                danger
+              />
             </div>
           </div>
         </DialogBox>
       )}
-      <div className="mt-3" />
-      <Dropdown
-        onChange={(newSelection: number) => setDropdownSelection(newSelection)}
-        options={[
-          'First option',
-          'Second option',
-          'Third option',
-          'Fourth option'
-        ]}
-        hint="Select one, or don't, I'm not your dad..."
-        selected={dropdownSelection}
-        header="Display name"
-        headerHint={
-          <p>
-            Use this API Key to familiarize yourself with Nebula’s public-facing
-            API endpoints and to perform testing during development. You’ll have
-            access to it for as long as you are opted into Developer Portal.
-          </p>
-        }
-      />
     </div>
   );
 };

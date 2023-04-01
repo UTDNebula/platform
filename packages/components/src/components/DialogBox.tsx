@@ -66,7 +66,8 @@ const DialogBox: React.FC<DialogBoxProps> = ({
   }
 
   // Establish styles that are used regardless of appearance
-  let boxStyles ='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-6 bg-white rounded-md shadow-xl shadow-shade';
+  let boxStyles =
+    'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 p-6 bg-white rounded-md shadow-xl shadow-shade/10';
   let iconCircleStyles = 'w-12 h-12 rounded-3xl mb-5';
   let iconStyles = 'm-3';
   let headerStyles = 'text-lg font-medium mb-2';
@@ -112,7 +113,7 @@ const DialogBox: React.FC<DialogBoxProps> = ({
               className={iconStyles}
             />
           </div>
-        )}  
+        )}
         <h2 className={headerStyles}>{header}</h2>
         {children}
       </div>

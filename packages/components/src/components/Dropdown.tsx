@@ -54,8 +54,10 @@
  */
 
 import React from 'react';
+import Link from 'next/link';
 import MaterialSymbol from 'react-material-symbols/outlined';
 import BadPropsException from '../utils/BadPropsException';
+import Button from './Button';
 import HoverableHint from './HoverableHint';
 
 type DropdownProps = {
@@ -89,14 +91,20 @@ const Dropdown: React.FC<DropdownProps> = ({
     );
   }
 
+  if (helperTextLink !== undefined && helperText === undefined) {
+    throw new BadPropsException(
+      'Dropdowns must have helperText to have a helperTextLink!'
+    );
+  }
+
   const [expanded, setExpanded] = React.useState(false);
 
   // Establish styles that are used regardless of selection and expanded status
-  let footprintStyles =
-    'absolute top-0 left-0 w-full bg-white border border-neutral-200 rounded-md shadow-sm shadow-shaded text-tahiti';
-  let rowStyles = 'flex flex-row justify-between items-center px-3 py-2.5 text-sm';
+  let rowStyles =
+    'flex flex-row justify-between items-center px-3 py-2.5 text-sm';
   let topStyles = rowStyles + ' hover:bg-neutral-50 active:bg-neutral-100';
-  let expandableRowStyles = rowStyles + ' w-full hover:bg-neutral-100 active:bg-neutral-200';
+  let expandableRowStyles =
+    rowStyles + ' w-full hover:bg-neutral-100 active:bg-neutral-200';
 
   // Adjust text color based on whether an option is selected
   if (selected === undefined) {
@@ -105,7 +113,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   // Adjust top row corner rounding based on expanded status
   if (expanded) {
-    topStyles += ' rounded-t-md';
+    topStyles += ' rounded-md';
   } else {
     topStyles += ' rounded-md';
   }
@@ -129,7 +137,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       {/* Specify w and h to ensure that, when expanded, the space occupied by
           this component in the normal flow of the document will not change */}
       <div className="relative w-96 h-10">
-        <div className={footprintStyles}>
+        <div className="absolute top-0 left-0 w-full bg-white border border-neutral-200 rounded-md shadow-sm shadow-shade/5 text-tahiti">
           {/* Render the top part of the dropdown (always visible) */}
           <button
             type="button"
@@ -185,6 +193,13 @@ const Dropdown: React.FC<DropdownProps> = ({
           )}
         </div>
       </div>
+      {/* Include helperText if it is supplied */}
+      {helperText !== undefined && helperTextLink === undefined && (
+        <p className="text-sm my-2.5">{helperText}</p>
+      )}
+      {helperText !== undefined && helperTextLink !== undefined && (
+        <Button size="md" type="inline-link" action="/" text={helperText} />
+      )}
     </>
   );
 };

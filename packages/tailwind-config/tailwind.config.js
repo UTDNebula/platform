@@ -2,9 +2,6 @@ module.exports = {
   content: ["../../packages/components/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
-      borderWidth: {
-        '3': '3px',
-      },
       colors: {
         'haiti': '#090b2c', // brand black
         'persimmon': {
@@ -41,12 +38,6 @@ module.exports = {
       },
       width: {
         'wide': '32rem'
-      },
-      height: {
-        '13': '3.25rem'
-      },
-      margin: {
-        '3px': '3px'
       }
     },
   },

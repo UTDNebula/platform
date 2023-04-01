@@ -42,7 +42,7 @@ const HoverableHint: React.FC<HoverableHintProps> = ({
 
   // Establish styles that are used regardless of appearance and spread
   let hintStyles =
-    'absolute w-80 p-4 text-neutral-700 bg-white rounded-lg shadow-lg shadow-shade';
+    'absolute z-10 w-80 p-4 text-neutral-700 bg-white rounded-lg shadow-lg shadow-shade/10';
 
   // Show/hide hint dialog based on hover status
   if (visible) {

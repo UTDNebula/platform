@@ -162,6 +162,9 @@ importers:
 
   packages/components:
     dependencies:
+      next:
+        specifier: ^13.1.1
+        version: 13.2.3(@babel/core@7.21.0)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0
