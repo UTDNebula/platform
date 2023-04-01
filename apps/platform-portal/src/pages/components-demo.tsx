@@ -59,8 +59,7 @@ const ComponentsDemo: NextPage = () => {
         headerHint={
           <p>
             Use this API Key to familiarize yourself with Nebula’s public-facing
-            API endpoints and to perform testing during development. You’ll have
-            access to it for as long as you are opted into Developer Portal.
+            API endpoints and to perform testing during development.
           </p>
         }
         helperText="Don't like this?"
@@ -124,7 +123,7 @@ const ComponentsDemo: NextPage = () => {
           disabled
         />
       </div>
-      <HoverableHint hintPosition="top-right">
+      <HoverableHint hintPosition="top-right" grayed>
         <p>
           Use this API Key to familiarize yourself with Nebula’s public-facing
           API endpoints and to perform testing during development. You’ll have
@@ -132,7 +131,7 @@ const ComponentsDemo: NextPage = () => {
         </p>
       </HoverableHint>
       <div className="ml-96">
-        <HoverableHint hintPosition="top-left">
+        <HoverableHint hintPosition="top-left" grayed>
           <p>
             Use this API Key to familiarize yourself with Nebula’s public-facing
             API endpoints and to perform testing during development. You’ll have

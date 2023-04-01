@@ -5,17 +5,12 @@
  * A <Dropdown> is an expandable menu from which a single option can be chosen.
  * While no option is selected, <Dropdown>s display customizable hint text in
  * place of an option. Clicking on an unexpanded <Dropdown> expands it, causing
- * all options to be displayed. When an option is moused over, its bounding
- * rectangle becomes shaded. <Dropdown>s can optionally have header text, which
- * is rendered in normal-weight text. If this header text exists, it can
- * optionally be accompanied by a <HoverableHint>, which appears to the right
- * of it. <Dropdown>s can also optionally have helper text; if supplied, it
- * appears just below them and can be made into a link. <Dropdown>s get their
- * options from, learn which option is currently selected, and send updates
- * about selection changes to their parent elements via the options, selected,
- * and onChange props, respectively. Finally, <Dropdown>s can be put into an
- * error or disabled state (but not both; disabled takes priority) by setting
- * the props of the same names to true.
+ * all options to be displayed. <Dropdown>s can optionally have header text. If
+ * this is included, it can optionally be accompanied by a <HoverableHint> to
+ * its immediate right. <Dropdown>s can also optionally have helper text; if
+ * supplied, it appears at the bottom and can optionally be made into a link.
+ * Finally, <Dropdown>s can be put into an error or disabled state (but not
+ * both; disabled takes priority) by setting the corresponding props to true.
  *
  * Props:
  * options (required) - the options that this <Dropdown> should display. they
@@ -54,7 +49,6 @@
  */
 
 import React from 'react';
-import Link from 'next/link';
 import MaterialSymbol from 'react-material-symbols/outlined';
 import BadPropsException from '../utils/BadPropsException';
 import Button from './Button';
@@ -100,14 +94,33 @@ const Dropdown: React.FC<DropdownProps> = ({
   const [expanded, setExpanded] = React.useState(false);
 
   // Establish styles that are used regardless of selection and expanded status
+  let headerStyles = 'text-sm font-medium mb-1';
+  let dropdownStyles =
+    'absolute top-0 left-0 w-full bg-white border rounded-md shadow-sm shadow-shade/5 text-tahiti';
   let rowStyles =
     'flex flex-row justify-between items-center px-3 py-2.5 text-sm';
   let topStyles = rowStyles + ' hover:bg-neutral-50 active:bg-neutral-100';
   let expandableRowStyles =
     rowStyles + ' w-full hover:bg-neutral-100 active:bg-neutral-200';
+  let helperTextStyles = 'text-sm my-2.5';
+
+  // Adjust colors based on disabled and error props
+  if (disabled) {
+    headerStyles += ' text-neutral-400';
+    dropdownStyles += ' border-neutral-200';
+    helperTextStyles += ' text-neutral-400';
+  } else if (error) {
+    headerStyles += ' text-haiti';
+    dropdownStyles += ' border-persimmon-300';
+    helperTextStyles += ' text-persimmon-500';
+  } else {
+    headerStyles += ' text-haiti';
+    dropdownStyles += ' border-neutral-200';
+    helperTextStyles += ' text-neutral-500';
+  }
 
   // Adjust text color based on whether an option is selected
-  if (selected === undefined) {
+  if (selected === undefined || disabled) {
     topStyles += ' text-neutral-400';
   }
 
@@ -123,26 +136,28 @@ const Dropdown: React.FC<DropdownProps> = ({
       {/* Include a header if one is supplied */}
       {header !== undefined && (
         <div className="flex flex-row gap-x-1 ">
-          <p className="text-sm font-medium mb-1">{header}</p>
+          <p className={headerStyles}>{header}</p>
           {/* Include a hoverable hint next to the header if one is supplied */}
           {headerHint !== undefined && (
-            <div className="">
-              <HoverableHint hintPosition="top-right">
-                {headerHint}
-              </HoverableHint>
-            </div>
+            <HoverableHint hintPosition="top-right" grayed={disabled}>
+              {headerHint}
+            </HoverableHint>
           )}
         </div>
       )}
       {/* Specify w and h to ensure that, when expanded, the space occupied by
           this component in the normal flow of the document will not change */}
       <div className="relative w-96 h-10">
-        <div className="absolute top-0 left-0 w-full bg-white border border-neutral-200 rounded-md shadow-sm shadow-shade/5 text-tahiti">
+        <div className={dropdownStyles}>
           {/* Render the top part of the dropdown (always visible) */}
           <button
             type="button"
             className="w-full"
-            onClick={() => setExpanded(!expanded)}
+            onClick={() => {
+              if (!disabled) {
+                setExpanded(!expanded);
+              }
+            }}
           >
             <div className={topStyles}>
               {/* Show hint or selected option text, as applicable */}
@@ -172,8 +187,10 @@ const Dropdown: React.FC<DropdownProps> = ({
                     type="button"
                     className={expandableRowStyles}
                     onClick={() => {
-                      onChange(index);
-                      setExpanded(false);
+                      if (!disabled) {
+                        onChange(index);
+                        setExpanded(false);
+                      }
                     }}
                   >
                     {option}
@@ -194,12 +211,21 @@ const Dropdown: React.FC<DropdownProps> = ({
         </div>
       </div>
       {/* Include helperText if it is supplied */}
-      {helperText !== undefined && helperTextLink === undefined && (
-        <p className="text-sm my-2.5">{helperText}</p>
-      )}
-      {helperText !== undefined && helperTextLink !== undefined && (
-        <Button size="md" type="inline-link" action="/" text={helperText} />
-      )}
+      {helperText !== undefined &&
+        (helperTextLink === undefined || disabled) && (
+          <p className={helperTextStyles + ' pb-2'}>{helperText}</p>
+        )}
+      {helperText !== undefined &&
+        helperTextLink !== undefined &&
+        !disabled && (
+          <Button
+            size="md"
+            type="inline-link"
+            action={helperTextLink}
+            danger={error}
+            text={helperText}
+          />
+        )}
     </>
   );
 };

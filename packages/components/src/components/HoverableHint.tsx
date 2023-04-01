@@ -11,6 +11,8 @@
  *                           non-modal dialog should appear. can be 'top left',
  *                           'top right', 'bottom left', or 'bottom right'.
  *                           the default is 'bottom-right'.
+ * grayed (optional) - true if this <HoverableHint> should appear grayed out
+ *                     (it will still function), false or unspecified if not.
  * children (optional*) - the contents of the floating, non-modal dialog.
  * NOTE: children must be optional for React to work correctly. However, not
  *       supplying children to this component will cause a BadPropsException.
@@ -25,11 +27,13 @@ import BadPropsException from '../utils/BadPropsException';
 
 type HoverableHintProps = {
   hintPosition?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+  grayed?: boolean;
   children?: React.ReactNode;
 };
 
 const HoverableHint: React.FC<HoverableHintProps> = ({
   hintPosition,
+  grayed,
   children
 }) => {
   if (children === undefined) {
@@ -42,7 +46,7 @@ const HoverableHint: React.FC<HoverableHintProps> = ({
 
   // Establish styles that are used regardless of appearance and spread
   let hintStyles =
-    'absolute z-10 w-80 p-4 text-neutral-700 bg-white rounded-lg shadow-lg shadow-shade/10';
+    'absolute z-10 w-80 p-4 text-sm text-neutral-700 bg-white rounded-lg shadow-lg shadow-shade/10';
 
   // Show/hide hint dialog based on hover status
   if (visible) {
@@ -68,6 +72,7 @@ const HoverableHint: React.FC<HoverableHintProps> = ({
           weight={500}
           onMouseOver={() => setVisible(true)}
           onMouseOut={() => setVisible(false)}
+          className={grayed ? 'text-neutral-400' : 'text-haiti'}
         />
       </div>
     );
@@ -90,6 +95,7 @@ const HoverableHint: React.FC<HoverableHintProps> = ({
 
 HoverableHint.defaultProps = {
   hintPosition: 'bottom-right',
+  grayed: false,
   children: undefined
 };
 
