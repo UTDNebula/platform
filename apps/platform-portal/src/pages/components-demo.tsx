@@ -9,9 +9,13 @@
  */
 
 import React from 'react';
-import Link from 'next/link';
 import { Button, DialogBox, Dropdown, HoverableHint } from 'components';
 import { NextPage } from 'next';
+import {
+  ExclamationTriangleIcon,
+  HomeIcon,
+  WindowIcon
+} from '@heroicons/react/20/solid';
 
 function doAlert() {
   alert('Hi'); // eslint-disable-line no-alert
@@ -22,8 +26,14 @@ const ComponentsDemo: NextPage = () => {
   const [dropdownSelection, setDropdownSelection] = React.useState<
     number | undefined
   >(undefined);
+  const buttonSizes: Array<'sm' | 'md' | 'lg'> = ['sm', 'md', 'lg'];
+  const buttonTypes: Array<
+    'primary' | 'secondary' | 'tertiary' | 'outlined' | 'inline-link'
+  > = ['primary', 'secondary', 'tertiary', 'outlined', 'inline-link'];
   return (
     <div className="m-2">
+      <p>I'm Inter</p>
+      <p className="font-kallisto">I'm Kallisto</p>
       <HoverableHint hintPosition="bottom-right">
         <p>
           Use this API Key to familiarize yourself with Nebula’s public-facing
@@ -31,7 +41,7 @@ const ComponentsDemo: NextPage = () => {
           access to it for as long as you are opted into Developer Portal.
         </p>
       </HoverableHint>
-      <div className="float-right">
+      <div className="ml-96">
         <HoverableHint hintPosition="bottom-left">
           <p>
             Use this API Key to familiarize yourself with Nebula’s public-facing
@@ -40,97 +50,6 @@ const ComponentsDemo: NextPage = () => {
           </p>
         </HoverableHint>
       </div>
-      <div className="flex align-center space-x-2">
-        <Link href="/">
-          <Button appearance="primary" text="Go Home" />
-        </Link>
-        <Link href="/">
-          <Button appearance="secondary" icon="home" />
-        </Link>
-      </div>
-      <Link href="/">
-        <Button appearance="danger" spread icon="home" iconSide="right" />
-      </Link>
-      <div className="flex align-center space-x-2">
-        <Button
-          appearance="primary"
-          action={doAlert}
-          text="Alert!"
-          icon="warning"
-          iconSide="left"
-        />
-        <Button
-          appearance="secondary"
-          action={doAlert}
-          text="Alert!"
-          icon="refresh"
-          iconSide="right"
-        />
-      </div>
-      <Button
-        appearance="primary"
-        action={doAlert}
-        spread
-        text="Alert!"
-        icon="warning"
-      />
-      <HoverableHint hintPosition="top-right">
-        <p>
-          Use this API Key to familiarize yourself with Nebula’s public-facing
-          API endpoints and to perform testing during development. You’ll have
-          access to it for as long as you are opted into Developer Portal.
-        </p>
-      </HoverableHint>
-      <div className="float-right">
-        <HoverableHint hintPosition="top-left">
-          <p>
-            Use this API Key to familiarize yourself with Nebula’s public-facing
-            API endpoints and to perform testing during development. You’ll have
-            access to it for as long as you are opted into Developer Portal.
-          </p>
-        </HoverableHint>
-      </div>
-      <Button
-        appearance="primary"
-        action={() => setDialogBoxOpen(true)}
-        text="Show Dialog Box"
-        icon="preview"
-        iconSide="right"
-      />
-      {dialogBoxOpen && (
-        <DialogBox
-          onClose={() => setDialogBoxOpen(false)}
-          header="Welcome to My Dialog"
-        >
-          <p className="font-roboto text-xl">
-            Here, you can immediately and permanently delete your entire Nebula
-            Labs account, including all account data. Note that this action will
-            sign you out of all Nebula Labs services and cannot be undone. To
-            confirm, and to verify that it’s you, please re-enter your password.
-          </p>
-        </DialogBox>
-      )}
-      <Button
-        appearance="danger"
-        action={() => setDangerLogBoxOpen(true)}
-        text="Show Dangerlog Box"
-        icon="preview"
-        iconSide="right"
-      />
-      {dangerLogBoxOpen && (
-        <DialogBox
-          onClose={() => setDangerLogBoxOpen(false)}
-          appearance="danger"
-        >
-          <p className="font-roboto text-xl">
-            Here, you can immediately and permanently delete your entire Nebula
-            Labs account, including all account data. Note that this action will
-            sign you out of all Nebula Labs services and cannot be undone. To
-            confirm, and to verify that it’s you, please re-enter your password.
-          </p>
-        </DialogBox>
-      )}
-      <div className="mt-3" />
       <Dropdown
         onChange={(newSelection: number) => setDropdownSelection(newSelection)}
         options={[
@@ -142,13 +61,159 @@ const ComponentsDemo: NextPage = () => {
         hint="Select one, or don't, I'm not your dad..."
         selected={dropdownSelection}
         header="Display name"
-        headerHint={<p>
+        headerHint={
+          <p>
+            Use this API Key to familiarize yourself with Nebula’s public-facing
+            API endpoints and to perform testing during development.
+          </p>
+        }
+        helperText="Don't like this?"
+        helperTextLink="/"
+      />
+      {[false, true].map((disabled, disabledIndex) => (
+        <div key={disabledIndex}>
+          {[false, true].map((danger, dangerIndex) => (
+            <div key={disabledIndex * 2 + dangerIndex}>
+              {buttonSizes.map((size) => (
+                <div
+                  key={disabledIndex * 2 + dangerIndex + size}
+                  className="flex space-x-2 m-2"
+                >
+                  {buttonTypes.map((type) => {
+                    return (
+                      <Button
+                        key={disabledIndex * 2 + dangerIndex + size + type}
+                        size={size}
+                        type={type}
+                        action="/"
+                        danger={danger}
+                        text="Go Home"
+                        Icon={HomeIcon}
+                        disabled={disabled}
+                      />
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      ))}
+      <Button
+        size="lg"
+        type="primary"
+        action="/"
+        text="Go Home"
+        Icon={HomeIcon}
+        iconSide="right"
+        spread
+      />
+      <div className="flex align-center space-x-2 my-2">
+        <Button
+          size="lg"
+          type="primary"
+          danger
+          text="Alert!"
+          Icon={ExclamationTriangleIcon}
+          iconSide="left"
+          action={doAlert}
+        />
+        <Button
+          size="lg"
+          type="primary"
+          danger
+          Icon={ExclamationTriangleIcon}
+          iconSide="left"
+          action={doAlert}
+          disabled
+        />
+      </div>
+      <HoverableHint hintPosition="top-right" grayed>
+        <p>
           Use this API Key to familiarize yourself with Nebula’s public-facing
           API endpoints and to perform testing during development. You’ll have
           access to it for as long as you are opted into Developer Portal.
-        </p>}
+        </p>
+      </HoverableHint>
+      <div className="ml-96">
+        <HoverableHint hintPosition="top-left" grayed>
+          <p>
+            Use this API Key to familiarize yourself with Nebula’s public-facing
+            API endpoints and to perform testing during development. You’ll have
+            access to it for as long as you are opted into Developer Portal.
+          </p>
+        </HoverableHint>
+      </div>
+      <Button
+        size="lg"
+        type="primary"
+        action={() => setDialogBoxOpen(true)}
+        text="Show Dialog Box"
+        Icon={WindowIcon}
+        iconSide="right"
       />
-      <Button appearance="primary" text="Hello" />
+      {dialogBoxOpen && (
+        <DialogBox onClose={() => setDialogBoxOpen(false)} appearance="wide">
+          <div className="flex flex-col gap-y-8">
+            <p className="text-sm text-neutral-500">
+              Here, you can immediately and permanently delete your entire
+              Nebula Labs account, including all account data. Note that this
+              action will sign you out of all Nebula Labs services and cannot be
+              undone. To confirm, and to verify that it’s you, please re-enter
+              your password.
+            </p>
+            <div className="flex flex-row justify-end gap-x-3">
+              <Button size="md" type="tertiary" action="/" text="Action" />
+              <Button size="md" type="primary" action="/" text="Action" />
+            </div>
+          </div>
+        </DialogBox>
+      )}
+      <Button
+        size="lg"
+        type="primary"
+        danger
+        action={() => setDangerLogBoxOpen(true)}
+        text="Show Dangerlog Box"
+        Icon={WindowIcon}
+        iconSide="right"
+      />
+      {dangerLogBoxOpen && (
+        <DialogBox
+          onClose={() => setDangerLogBoxOpen(false)}
+          Icon={ExclamationTriangleIcon}
+          header="Welcome to My Dialog"
+          appearance="slim"
+          danger
+        >
+          <div className="flex flex-col gap-y-8">
+            <p className="text-sm text-neutral-500">
+              Here, you can immediately and permanently delete your entire
+              Nebula Labs account, including all account data. Note that this
+              action will sign you out of all Nebula Labs services and cannot be
+              undone. To confirm, and to verify that it’s you, please re-enter
+              your password.
+            </p>
+            <div className="flex flex-col gap-y-3">
+              <Button
+                size="md"
+                type="tertiary"
+                action="/"
+                spread
+                text="Action"
+              />
+              <Button
+                size="md"
+                type="primary"
+                action="/"
+                spread
+                text="Action"
+                danger
+              />
+            </div>
+          </div>
+        </DialogBox>
+      )}
     </div>
   );
 };

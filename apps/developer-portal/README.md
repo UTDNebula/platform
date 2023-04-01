@@ -29,7 +29,7 @@
 
 - ESLint and Prettier are supported, and have been configured to match Nebula's opinionated style guide.
 - Tailwind CSS has been configured and is the preferred method for implementing any and all styling.
-- `react-material-symbols` are also available.
+- `heroicons` are also available.
 - Communication between front-end and local back-end is facilitated by tRPC.
 - Communication with external back-end is facilitated by Express.
 - Input validation is facilitated by Zod.

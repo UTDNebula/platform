@@ -28,6 +28,9 @@ importers:
 
   apps/developer-portal:
     dependencies:
+      '@heroicons/react':
+        specifier: ^2.0.17
+        version: 2.0.17(react@18.2.0)
       '@tanstack/react-query':
         specifier: ^4.26.1
         version: 4.26.1(react-dom@18.2.0)(react@18.2.0)
@@ -58,9 +61,6 @@ importers:
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
-      react-material-symbols:
-        specifier: ^2.0.2
-        version: 2.0.2
       zod:
         specifier: ^3.21.4
         version: 3.21.4
@@ -95,6 +95,9 @@ importers:
 
   apps/platform-portal:
     dependencies:
+      '@heroicons/react':
+        specifier: ^2.0.17
+        version: 2.0.17(react@18.2.0)
       '@tanstack/react-query':
         specifier: ^4.26.1
         version: 4.26.1(react-dom@18.2.0)(react@18.2.0)
@@ -125,9 +128,6 @@ importers:
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
-      react-material-symbols:
-        specifier: ^2.0.2
-        version: 2.0.2
       zod:
         specifier: ^3.21.4
         version: 3.21.4
@@ -162,12 +162,15 @@ importers:
 
   packages/components:
     dependencies:
+      '@heroicons/react':
+        specifier: ^2.0.17
+        version: 2.0.17(react@18.2.0)
+      next:
+        specifier: ^13.1.1
+        version: 13.2.3(@babel/core@7.21.0)(react-dom@18.2.0)(react@18.2.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0
-      react-material-symbols:
-        specifier: ^2.0.2
-        version: 2.0.2
     devDependencies:
       '@types/react':
         specifier: ^18.0.17
@@ -458,6 +461,14 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
+  /@heroicons/react@2.0.17(react@18.2.0):
+    resolution: {integrity: sha512-90GMZktkA53YbNzHp6asVEDevUQCMtxWH+2UK2S8OpnLEu7qckTJPhNxNQG52xIR1WFTwFqtH6bt7a60ZNcLLA==}
+    peerDependencies:
+      react: '>= 16'
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /@humanwhocodes/config-array@0.5.0:
     resolution: {integrity: sha512-FagtKFz74XrTl7y6HCzQpwDfXP0yhxe9lHLD1UZxjvZIcbyRz8zTFF/yYNfSfzU414eDwZ1SrO0Qvtyf+wFMQg==}
     engines: {node: '>=10.10.0'}
@@ -650,11 +661,6 @@ packages:
 
   /@rushstack/eslint-patch@1.2.0:
     resolution: {integrity: sha512-sXo/qW2/pAcmT43VoRKOJbDOfV3cYpq3szSVfIThQXNt+E4DfKj361vaAt3c88U5tPUxzEswam7GW48PJqtKAg==}
-    dev: false
-
-  /@senojs/rollup-plugin-style-inject@0.2.3:
-    resolution: {integrity: sha512-3/spt7JG2iHMW1YdtFbDafWa4IYNkJ99tibY7oDe5LXVTq2JxBpOsdRmJyCCqI5I4kBoUUYWS2yEG/FKwrLy/A==}
-    engines: {node: '>=12'}
     dev: false
 
   /@swc/helpers@0.4.14:
@@ -2891,15 +2897,6 @@ packages:
 
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
-    dev: false
-
-  /react-material-symbols@2.0.2:
-    resolution: {integrity: sha512-cLWlRBkc0ctG87ERvUNaKGgQ/wYUU1HnLrtvZsa0sNV3w0OZF0EyskmIDlnX+QXnXmhVrGOZGUCHzU3pUaKnIg==}
-    engines: {node: 18.12.1}
-    dependencies:
-      '@senojs/rollup-plugin-style-inject': 0.2.3
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /react-ssr-prepass@1.5.0(react@18.2.0):

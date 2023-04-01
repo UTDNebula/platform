@@ -25,7 +25,7 @@
 
 - ESLint and Prettier are supported, and have been configured to match Nebula's opinionated style guide.
 - Tailwind CSS has been configured and is the preferred method for implementing any and all styling.
-- `react-material-symbols` are available in `platform-portal`, `developer-portal`, and `components`
+- `heroicons` are available in `platform-portal`, `developer-portal`, and `components`
 - For both `platform-portal` and `developer-portal`:
   - Communication between front-end and local back-end is facilitated by tRPC.
   - Communication with external back-end is facilitated by Express.
