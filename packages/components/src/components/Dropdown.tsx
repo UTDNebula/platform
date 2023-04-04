@@ -211,7 +211,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       {/* Include helperText if it is supplied */}
       {helperText !== undefined &&
         (helperTextLink === undefined || disabled) && (
-          <p className={helperTextStyles + ' pb-2'}>{helperText}</p>
+          <p className={helperTextStyles}>{helperText}</p>
         )}
       {helperText !== undefined &&
         helperTextLink !== undefined &&
