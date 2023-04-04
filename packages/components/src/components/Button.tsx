@@ -78,9 +78,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   } else if (!disabled && typeof action === 'string') {
     // NextJS <Link>s are for link actions
     return (
-      <Link href={action} className="rounded-md">
-        <div className="block w-fit">{children}</div>
-      </Link>
+      <Link href={action} className="rounded-md">{children}</Link>
     );
   }
 
