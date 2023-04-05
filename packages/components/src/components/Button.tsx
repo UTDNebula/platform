@@ -78,14 +78,14 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   } else if (!disabled && typeof action === 'string') {
     // NextJS <Link>s are for link actions
     return (
-      <Link href={action} className="rounded-md">
+      <Link href={action} className="rounded-md block w-fit">
         {children}
       </Link>
     );
   }
 
   // don't want to be able to focus on a disabled button
-  return <div>{children}</div>;
+  return <div className="rounded-md">{children}</div>;
 };
 
 ButtonWrapper.defaultProps = {
@@ -133,15 +133,28 @@ const Button: React.FC<ButtonProps> = ({
    * different for inline-link type buttons). Specifying a height is
    * required for box-border to work; we use what it would be anyway. */
   const addPaddingX = type !== 'inline-link';
-  if (size === 'lg') {
-    buttonStyles += ' text-base h-12 py-3' + (addPaddingX ? ' px-5' : '');
-    buttonStyles += ' gap-x-2';
-  } else if (size === 'md') {
-    buttonStyles += ' text-sm h-10 py-2.5' + (addPaddingX ? ' px-4' : '');
-    buttonStyles += ' gap-x-1.5';
+  if (type === 'inline-link') {
+    if (size === 'lg') {
+      buttonStyles += ' text-base my-3';
+      buttonStyles += ' gap-x-2';
+    } else if (size === 'md') {
+      buttonStyles += ' text-sm my-2.5';
+      buttonStyles += ' gap-x-1.5';
+    } else {
+      buttonStyles += ' text-xs my-2';
+      buttonStyles += ' gap-x-1.5';
+    }
   } else {
-    buttonStyles += ' text-xs h-8 py-2' + (addPaddingX ? ' px-3' : '');
-    buttonStyles += ' gap-x-1.5';
+    if (size === 'lg') {
+      buttonStyles += ' text-base h-12 py-3 px-5';
+      buttonStyles += ' gap-x-2';
+    } else if (size === 'md') {
+      buttonStyles += ' text-sm h-10 py-2.5 px-4';
+      buttonStyles += ' gap-x-1.5';
+    } else {
+      buttonStyles += ' text-xs h-8 py-2 px-3';
+      buttonStyles += ' gap-x-1.5';
+    }
   }
 
   // Choose colors and shades based on danger, type, and disabled props
@@ -179,7 +192,7 @@ const Button: React.FC<ButtonProps> = ({
           ' border-cornflower-500 text-cornflower-500 hover:border-cornflower-400 active:text-cornflower-400';
       }
     } else {
-      buttonStyles += ' bg-white';
+      // No background color for inline-links
       if (disabled) {
         buttonStyles += ' text-cornflower-300';
       } else {
@@ -221,7 +234,7 @@ const Button: React.FC<ButtonProps> = ({
           ' border-persimmon-500 text-persimmon-500 hover:border-persimmon-400 active:text-persimmon-400';
       }
     } else {
-      buttonStyles += ' bg-white';
+      // No background color for inline-links
       if (disabled) {
         buttonStyles += ' text-persimmon-300';
       } else {
