@@ -76,6 +76,7 @@ const ComponentsDemo: NextPage = () => {
         }
         helperText="Don't like this?"
         helperTextLink="/"
+        error
       />
       <InputField
         content={inputFieldContent}

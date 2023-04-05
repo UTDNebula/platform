@@ -55,6 +55,7 @@ import {
   ChevronUpIcon
 } from '@heroicons/react/20/solid';
 import BadPropsException from '../utils/BadPropsException';
+import { getDropdownStyles } from '../utils/CommonStyles';
 import Button from './Button';
 import HoverableHint from './HoverableHint';
 
@@ -97,52 +98,15 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   const [expanded, setExpanded] = React.useState(false);
 
-  // Establish styles that are used regardless of selection and expanded status
-  let headerStyles = 'text-sm font-medium mb-1';
-  let dropdownStyles =
-    'absolute top-0 left-0 w-full bg-white border rounded-md shadow-sm shadow-shade/5';
-  let rowStyles =
-    'flex flex-row justify-between items-center px-3 py-2.5 text-sm';
-  let topStyles = rowStyles + ' hover:bg-neutral-50 active:bg-neutral-100';
-  let expandableRowStyles =
-    rowStyles + ' w-full hover:bg-neutral-100 active:bg-neutral-200';
-  let helperTextStyles = 'text-sm my-2.5';
-
-  // Adjust colors based on disabled and error props
-  if (disabled) {
-    headerStyles += ' text-neutral-400';
-    dropdownStyles += ' border-neutral-200';
-    helperTextStyles += ' text-neutral-400';
-  } else if (error) {
-    headerStyles += ' text-haiti';
-    dropdownStyles += ' border-persimmon-300';
-    helperTextStyles += ' text-persimmon-500';
-  } else {
-    headerStyles += ' text-haiti';
-    dropdownStyles += ' border-neutral-200';
-    helperTextStyles += ' text-neutral-500';
-  }
-
-  // Adjust text color based on whether an option is selected
-  if (selected === undefined || disabled) {
-    topStyles += ' text-neutral-400';
-  }
-
-  // Adjust top row corner rounding based on expanded status
-  // Also ensure that expanded dropdowns obscure HoverableHints
-  if (expanded) {
-    topStyles += ' rounded-t-md';
-    dropdownStyles += ' z-20';
-  } else {
-    topStyles += ' rounded-md';
-  }
+  // Use utils/CommonStyles.ts to compute styles
+  const styles = getDropdownStyles(selected, !!error, !!disabled, expanded);
 
   return (
     <div className="font-inter text-haiti w-96">
       {/* Include a header if one is supplied */}
       {header !== undefined && (
         <div className="flex flex-row gap-x-1">
-          <p className={headerStyles}>{header}</p>
+          <p className={styles.headerStyles}>{header}</p>
           {/* Include a hoverable hint next to the header if one is supplied */}
           {headerHint !== undefined && (
             <HoverableHint hintPosition="top-right" grayed={disabled}>
@@ -151,10 +115,11 @@ const Dropdown: React.FC<DropdownProps> = ({
           )}
         </div>
       )}
-      {/* Specify w and h to ensure that, when expanded, the space occupied by
-          this component in the normal flow of the document will not change */}
+      {/* Specify height explicitly to ensure that, when expanded, the space
+       * occupied by this component in the normal flow of the document will
+       * not change */}
       <div className="relative h-10">
-        <div className={dropdownStyles}>
+        <div className={styles.containerStyles}>
           {/* Render the top part of the dropdown (always visible) */}
           <button
             type="button"
@@ -165,7 +130,7 @@ const Dropdown: React.FC<DropdownProps> = ({
               }
             }}
           >
-            <div className={topStyles}>
+            <div className={styles.topRowStyles}>
               {/* Show hint or selected option text, as applicable */}
               {selected === undefined ? hint : options[selected]}
               {expanded ? (
@@ -182,15 +147,16 @@ const Dropdown: React.FC<DropdownProps> = ({
               <div className="h-[1px] w-full bg-neutral-200" />
               {/* For each option... */}
               {options.map((option, index) => {
+                let thisExpandableRowStyles = styles.expandableRowStyles;
                 // eslint-disable-next-line @typescript-eslint/no-magic-numbers
                 if (index === options.length - 1) {
-                  expandableRowStyles += ' rounded-b-md';
+                  thisExpandableRowStyles += ' rounded-b-md';
                 }
                 return (
                   <button
                     key={option}
                     type="button"
-                    className={expandableRowStyles}
+                    className={thisExpandableRowStyles}
                     onClick={() => {
                       if (!disabled) {
                         onChange(index);
@@ -213,7 +179,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       {/* Include helperText if it is supplied */}
       {helperText !== undefined &&
         (helperTextLink === undefined || disabled) && (
-          <p className={helperTextStyles}>{helperText}</p>
+          <p className={styles.helperTextStyles}>{helperText}</p>
         )}
       {helperText !== undefined &&
         helperTextLink !== undefined &&
