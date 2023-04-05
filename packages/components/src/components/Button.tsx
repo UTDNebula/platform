@@ -83,7 +83,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   }
 
   // don't want to be able to focus on a disabled button
-  return <div>{children}</div>;
+  return <div className="rounded-md">{children}</div>;
 };
 
 ButtonWrapper.defaultProps = {
@@ -177,7 +177,7 @@ const Button: React.FC<ButtonProps> = ({
           ' border-cornflower-500 text-cornflower-500 hover:border-cornflower-400 active:text-cornflower-400';
       }
     } else {
-      buttonStyles += ' bg-white';
+      // No background color for inline-links
       if (disabled) {
         buttonStyles += ' text-cornflower-300';
       } else {
@@ -219,7 +219,7 @@ const Button: React.FC<ButtonProps> = ({
           ' border-persimmon-500 text-persimmon-500 hover:border-persimmon-400 active:text-persimmon-400';
       }
     } else {
-      buttonStyles += ' bg-white';
+      // No background color for inline-links
       if (disabled) {
         buttonStyles += ' text-persimmon-300';
       } else {

@@ -81,6 +81,12 @@ const ComponentsDemo: NextPage = () => {
         content={inputFieldContent}
         onChange={(newContent: string) => setInputFieldContent(newContent)}
         visibilityToggle
+        hint="Say something, I'm giving up on you..."
+        header="Song Lyric"
+        headerHint={<p>Something by OneRepublic, for example.</p>}
+        helperText="Need more examples?"
+        helperTextLink="/"
+        error
       />
       {[false, true].map((disabled, disabledIndex) => (
         <div key={disabledIndex}>

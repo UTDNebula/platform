@@ -129,8 +129,10 @@ const Dropdown: React.FC<DropdownProps> = ({
   }
 
   // Adjust top row corner rounding based on expanded status
+  // Also ensure that expanded dropdowns obscure HoverableHints
   if (expanded) {
     topStyles += ' rounded-t-md';
+    dropdownStyles += ' z-20';
   } else {
     topStyles += ' rounded-md';
   }

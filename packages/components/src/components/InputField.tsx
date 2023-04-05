@@ -20,8 +20,8 @@
  *                       the updated data in full.
  * visibilityToggle (optional) - true if this <InputField> should include a
  *                               clickable eye icon that toggles whether the
- *                               content (data) is displayed, false or
- *                               unspecified if not.
+ *                               content (data) is hidden with asterisks, false
+ *                               or unspecified if not.
  * hint (optional) - the text that this <InputField> will display in place of
  *                   user-provided data when the content prop is ''.
  *                   the default is 'Response'.
@@ -54,7 +54,7 @@ import BadPropsException from '../utils/BadPropsException';
 import Button from './Button';
 import HoverableHint from './HoverableHint';
 
-type DropdownProps = {
+type InputFieldProps = {
   content: string;
   onChange: Function;
   visibilityToggle?: boolean;
@@ -67,7 +67,7 @@ type DropdownProps = {
   disabled?: boolean;
 };
 
-const Dropdown: React.FC<DropdownProps> = ({
+const InputField: React.FC<InputFieldProps> = ({
   content,
   onChange,
   visibilityToggle,
@@ -97,6 +97,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   let headerStyles = 'text-sm font-medium mb-1';
   let boxStyles =
     'w-96 h-10 bg-white box-border border rounded-md shadow-sm shadow-shade/5 flex flex-row justify-between items-center px-3 py-2.5 text-sm';
+  let inputStyles = 'w-full outline-0';
   let helperTextStyles = 'text-sm my-2.5';
 
   // Adjust colors based on disabled and error props
@@ -106,17 +107,28 @@ const Dropdown: React.FC<DropdownProps> = ({
     helperTextStyles += ' text-neutral-400';
   } else if (error) {
     headerStyles += ' text-haiti';
-    boxStyles += ' border-persimmon-300';
+    boxStyles += ' border-persimmon-300 ring-persimmon-100';
+    // Always show an error ring when the <InputField> is not empty
+    if (content != '') {
+      boxStyles += ' ring-4';
+    } else {
+      boxStyles += ' focus-within:ring-4';
+    }
     helperTextStyles += ' text-persimmon-500';
   } else {
     headerStyles += ' text-haiti';
-    boxStyles += ' border-neutral-200';
+    boxStyles += ' border-neutral-200 ring-cornflower-100 focus-within:ring-4 focus-within:border-cornflower-300';
     helperTextStyles += ' text-neutral-500';
   }
 
   // Adjust text color based on whether an option is selected
   if (content === undefined || disabled) {
     boxStyles += ' text-neutral-400';
+  }
+
+  // Separate the <input> element and the visibility icon if the latter exists
+  if (visibilityToggle) {
+    inputStyles += ' mr-3';
   }
 
   return (
@@ -137,18 +149,20 @@ const Dropdown: React.FC<DropdownProps> = ({
           this component in the normal flow of the document will not change */}
       <div className={boxStyles}>
         <input
-          type="text"
+          type={visible ? 'text' : 'password'}
           value={content}
           placeholder={hint}
+          disabled={disabled}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full mr-3"
+          className={inputStyles}
         />
-        {visibilityToggle && visible ? (
+        {visibilityToggle && visible && (
           <EyeSlashIcon
             className="w-5 h-5 text-neutral-500"
             onClick={() => setVisible(false)}
           />
-        ) : (
+        )}
+        {visibilityToggle && !visible && (
           <EyeIcon
             className="w-5 h-5 text-neutral-500"
             onClick={() => setVisible(true)}
@@ -175,7 +189,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   );
 };
 
-Dropdown.defaultProps = {
+InputField.defaultProps = {
   hint: 'Response',
   header: undefined,
   headerHint: undefined,
@@ -185,4 +199,4 @@ Dropdown.defaultProps = {
   disabled: false
 };
 
-export default Dropdown;
+export default InputField;
