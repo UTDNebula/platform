@@ -123,7 +123,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           {/* Render the top part of the dropdown (always visible) */}
           <button
             type="button"
-            className="w-full"
+            className="w-full outline-0"
             onClick={() => {
               if (!disabled) {
                 setExpanded(!expanded);

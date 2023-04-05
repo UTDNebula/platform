@@ -97,15 +97,15 @@ const DIFComputeStyles = (
     helperTextStyles += ' text-neutral-400';
   } else if (error) {
     headerStyles += ' text-haiti';
-    containerStyles += ' border-persimmon-300';
+    containerStyles += ' border-persimmon-300 ring-persimmon-100';
+    containerStyles += '';
+    // Always show a ring when an error-state <InputField> is not empty
+    if (populated) {
+      containerStyles += ' ring-4';
+    } else {
+      containerStyles += ' focus-within:ring-4';
+    }
     if (!isDropdown) {
-      containerStyles += ' ring-persimmon-100';
-      // Always show a ring when an error-state <InputField> is not empty
-      if (populated) {
-        containerStyles += ' ring-4';
-      } else {
-        containerStyles += ' focus-within:ring-4';
-      }
       inputElementStyles += ' caret-persimmon-500';
     }
     helperTextStyles += ' text-persimmon-500';
