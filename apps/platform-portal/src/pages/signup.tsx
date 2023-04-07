@@ -1,16 +1,14 @@
 /*
- * Platform Portal Login Page (http(s)://[hosturl]/login)
+ * Platform Portal Signup Page (http(s)://[hosturl]/login)
  *
- * Exports a function component that renders the login page for Nebula
- * Platform. Services that make use of Nebula SSO have middleware.js files that
- * redirect here whenever an /auth endpoint query fails. On this page, users
- * supply the credentials (email and password) for their Nebula Labs accounts
- * and then click a "Sign in" button that makes an /sso endpoint query. On a
- * successful reply, users are sent the returned SSO JWT and redirected to the
- * service that brought them here, or to the authenticated view of Platform
- * Portal if no service did so. Users without a Nebula Labs account can create
- * one by following a link on this page. In the future, "Forgot password?"
- * functionality will also be implemented.
+ * Exports a function component that renders the signup page for Nebula
+ * Platform. On this page, users supply the information necessary to create a
+ * Nebula Labs account  and then click a "Create account" button that registers
+ * them and then makes an /sso endpoint query. On a successful reply, users are
+ * sent the returned SSO JWT and redirected to the service that brought them
+ * here, or to the authenticated view of Platform Portal if no service did so.
+ * Users who already have a Nebula Labs account can sign into it by following a
+ * link on this page.
  *
  * Written by Daniel "Ludo" DeAnda (dcd180001) for CS4485.0W1
  * (Nebula Platform CS Project) starting April 7, 2023
@@ -22,8 +20,10 @@ import Image from 'next/image';
 import { Button, InputField } from 'components';
 
 const Login: NextPage = () => {
+  const [displayName, setDisplayName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [confirmPassword, setConfirmPassword] = React.useState('');
   return (
     <div className="w-screen h-screen flex justify-center items-center bg-brand-gradient bg-cover bg-center">
       <div className="flex flex-col justify-center items-center gap-y-8 rounded-md px-6 py-10 bg-white">
@@ -40,6 +40,18 @@ const Login: NextPage = () => {
         {/* Form fields */}
         <div className="flex flex-col justify-center items-center gap-y-4">
           <InputField
+            content={displayName}
+            onChange={setDisplayName}
+            header="Display name"
+            headerHint={
+              <p className="text-sm">
+                Your display name is what Nebula Labs services will use to refer
+                to you. It is not a username and cannot be used to sign in.
+              </p>
+            }
+            hint=""
+          />
+          <InputField
             content={email}
             onChange={setEmail}
             header="Email address"
@@ -51,7 +63,13 @@ const Login: NextPage = () => {
             visibilityToggle
             header="Password"
             hint=""
-            helperText="Forgot password?"
+          />
+          <InputField
+            content={confirmPassword}
+            onChange={setConfirmPassword}
+            visibilityToggle
+            header="Confirm password"
+            hint=""
           />
         </div>
         {/* Actions */}
@@ -61,13 +79,13 @@ const Login: NextPage = () => {
             type="primary"
             action={() => alert('hi')}
             spread
-            text="Sign In"
+            text="Create Account"
           />
           <Button
             size="lg"
             type="inline-link"
-            action="/signup"
-            text="I don't have an account"
+            action="/login"
+            text="Already have an account?"
           />
         </div>
       </div>
