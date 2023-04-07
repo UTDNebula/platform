@@ -70,9 +70,11 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
     }
   }
 
-  let wrapperStyles = "rounded-md";
-  if (!spread) {
-    wrapperStyles += " block w-fit";
+  let wrapperStyles = 'rounded-md';
+  if (spread) {
+    wrapperStyles += ' block w-full';
+  } else {
+    wrapperStyles += ' block w-fit';
   }
 
   if (!disabled && typeof action === 'function') {
@@ -142,13 +144,13 @@ const Button: React.FC<ButtonProps> = ({
   const addPaddingX = type !== 'inline-link';
   if (type === 'inline-link') {
     if (size === 'lg') {
-      buttonStyles += ' text-base my-3';
+      buttonStyles += ' text-base';
       buttonStyles += ' gap-x-2';
     } else if (size === 'md') {
-      buttonStyles += ' text-sm my-2.5';
+      buttonStyles += ' text-sm';
       buttonStyles += ' gap-x-1.5';
     } else {
-      buttonStyles += ' text-xs my-2';
+      buttonStyles += ' text-xs';
       buttonStyles += ' gap-x-1.5';
     }
   } else {
@@ -249,13 +251,6 @@ const Button: React.FC<ButtonProps> = ({
           ' text-persimmon-500 hover:text-persimmon-600 active:text-persimmon-500';
       }
     }
-  }
-
-  // Choose width based on spread prop
-  if (spread) {
-    buttonStyles += ' w-full';
-  } else {
-    buttonStyles += ' w-fit';
   }
 
   // Choose balancing margin based on iconSide prop
