@@ -87,6 +87,7 @@ const ComponentsDemo: NextPage = () => {
         headerHint={<p>Something by OneRepublic, for example.</p>}
         helperText="Need more examples?"
         helperTextLink="/"
+        error
       />
       {[false, true].map((disabled, disabledIndex) => (
         <div key={disabledIndex}>

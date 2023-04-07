@@ -56,8 +56,8 @@ import {
 } from '@heroicons/react/20/solid';
 import BadPropsException from '../utils/BadPropsException';
 import { getDropdownStyles } from '../utils/CommonStyles';
-import Button from './Button';
-import HoverableHint from './HoverableHint';
+import DIFHeader from './DIFHeader';
+import DIFHelperText from './DIFHelperText';
 
 type DropdownProps = {
   options: string[];
@@ -104,17 +104,12 @@ const Dropdown: React.FC<DropdownProps> = ({
   return (
     <div className="font-inter text-haiti w-96">
       {/* Include a header if one is supplied */}
-      {header !== undefined && (
-        <div className="flex flex-row gap-x-1">
-          <p className={styles.headerStyles}>{header}</p>
-          {/* Include a hoverable hint next to the header if one is supplied */}
-          {headerHint !== undefined && (
-            <HoverableHint hintPosition="top-right" grayed={disabled}>
-              {headerHint}
-            </HoverableHint>
-          )}
-        </div>
-      )}
+      <DIFHeader
+        text={header}
+        styles={styles.headerStyles}
+        hint={headerHint}
+        disabled={disabled}
+      />
       {/* Specify height explicitly to ensure that, when expanded, the space
        * occupied by this component in the normal flow of the document will
        * not change */}
@@ -124,11 +119,8 @@ const Dropdown: React.FC<DropdownProps> = ({
           <button
             type="button"
             className="w-full outline-0"
-            onClick={() => {
-              if (!disabled) {
-                setExpanded(!expanded);
-              }
-            }}
+            disabled={disabled}
+            onClick={() => setExpanded(!expanded)}
           >
             <div className={styles.topRowStyles}>
               {/* Show hint or selected option text, as applicable */}
@@ -157,11 +149,10 @@ const Dropdown: React.FC<DropdownProps> = ({
                     key={option}
                     type="button"
                     className={thisExpandableRowStyles}
+                    disabled={disabled}
                     onClick={() => {
-                      if (!disabled) {
-                        onChange(index);
-                        setExpanded(false);
-                      }
+                      onChange(index);
+                      setExpanded(false);
                     }}
                   >
                     {option}
@@ -177,21 +168,13 @@ const Dropdown: React.FC<DropdownProps> = ({
         </div>
       </div>
       {/* Include helperText if it is supplied */}
-      {helperText !== undefined &&
-        (helperTextLink === undefined || disabled) && (
-          <p className={styles.helperTextStyles}>{helperText}</p>
-        )}
-      {helperText !== undefined &&
-        helperTextLink !== undefined &&
-        !disabled && (
-          <Button
-            size="md"
-            type="inline-link"
-            action={helperTextLink}
-            danger={error}
-            text={helperText}
-          />
-        )}
+      <DIFHelperText
+        styles={styles.helperTextStyles}
+        text={helperText}
+        link={helperTextLink}
+        error={error}
+        disabled={disabled}
+      />
     </div>
   );
 };

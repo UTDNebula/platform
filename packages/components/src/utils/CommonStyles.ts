@@ -111,10 +111,8 @@ const DIFComputeStyles = (
     helperTextStyles += ' text-persimmon-500';
   } else {
     headerStyles += ' text-haiti';
-    containerStyles += ' border-neutral-200';
+    containerStyles += ' border-neutral-200 ring-cornflower-100 focus-within:ring-4 focus-within:border-cornflower-300';
     if (!isDropdown) {
-      containerStyles +=
-        ' ring-cornflower-100 focus-within:ring-4 focus-within:border-cornflower-300';
       inputElementStyles += ' caret-cornflower-500';
     }
     helperTextStyles += ' text-neutral-500';

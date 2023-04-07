@@ -52,8 +52,8 @@ import React from 'react';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/20/solid';
 import BadPropsException from '../utils/BadPropsException';
 import { getInputFieldStyles } from '../utils/CommonStyles';
-import Button from './Button';
-import HoverableHint from './HoverableHint';
+import DIFHeader from './DIFHeader';
+import DIFHelperText from './DIFHelperText';
 
 type InputFieldProps = {
   content: string;
@@ -105,17 +105,12 @@ const InputField: React.FC<InputFieldProps> = ({
   return (
     <div className="font-inter text-haiti w-96">
       {/* Include a header if one is supplied */}
-      {header !== undefined && (
-        <div className="flex flex-row gap-x-1">
-          <p className={styles.headerStyles}>{header}</p>
-          {/* Include a hoverable hint next to the header if one is supplied */}
-          {headerHint !== undefined && (
-            <HoverableHint hintPosition="top-right" grayed={disabled}>
-              {headerHint}
-            </HoverableHint>
-          )}
-        </div>
-      )}
+      <DIFHeader
+        text={header}
+        styles={styles.headerStyles}
+        hint={headerHint}
+        disabled={disabled}
+      />
       {/* Render the input box itself */}
       <div className={styles.containerStyles}>
         <input
@@ -141,21 +136,13 @@ const InputField: React.FC<InputFieldProps> = ({
         )}
       </div>
       {/* Include helperText if it is supplied */}
-      {helperText !== undefined &&
-        (helperTextLink === undefined || disabled) && (
-          <p className={styles.helperTextStyles}>{helperText}</p>
-        )}
-      {helperText !== undefined &&
-        helperTextLink !== undefined &&
-        !disabled && (
-          <Button
-            size="md"
-            type="inline-link"
-            action={helperTextLink}
-            danger={error}
-            text={helperText}
-          />
-        )}
+      <DIFHelperText
+        styles={styles.helperTextStyles}
+        text={helperText}
+        link={helperTextLink}
+        error={error}
+        disabled={disabled}
+      />
     </div>
   );
 };

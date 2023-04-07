@@ -51,12 +51,14 @@ further dcumentation is needed. */
 
 type ButtonWrapperProps = {
   action: string | Function;
+  spread?: boolean;
   disabled?: boolean;
   children?: React.ReactNode;
 };
 
 const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   action,
+  spread,
   disabled,
   children
 }) => {
@@ -68,24 +70,29 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
     }
   }
 
+  let wrapperStyles = "rounded-md";
+  if (!spread) {
+    wrapperStyles += " block w-fit";
+  }
+
   if (!disabled && typeof action === 'function') {
     // <button>s are for function actions
     return (
-      <button type="button" className="rounded-md" onClick={clickHandler}>
+      <button type="button" className={wrapperStyles} onClick={clickHandler}>
         {children}
       </button>
     );
   } else if (!disabled && typeof action === 'string') {
     // NextJS <Link>s are for link actions
     return (
-      <Link href={action} className="rounded-md block w-fit">
+      <Link href={action} className={wrapperStyles}>
         {children}
       </Link>
     );
   }
 
   // don't want to be able to focus on a disabled button
-  return <div className="rounded-md">{children}</div>;
+  return <div className={wrapperStyles}>{children}</div>;
 };
 
 ButtonWrapper.defaultProps = {
@@ -265,7 +272,7 @@ const Button: React.FC<ButtonProps> = ({
   if (Icon) {
     if (iconSide === 'right') {
       return (
-        <ButtonWrapper action={action} disabled={disabled}>
+        <ButtonWrapper action={action} spread={spread} disabled={disabled}>
           <div className={buttonStyles}>
             {text}
             <Icon className={size === 'sm' ? 'w-4 h-4' : 'w-5 h-5'} />
@@ -274,7 +281,7 @@ const Button: React.FC<ButtonProps> = ({
       );
     }
     return (
-      <ButtonWrapper action={action} disabled={disabled}>
+      <ButtonWrapper action={action} spread={spread} disabled={disabled}>
         <div className={buttonStyles}>
           <Icon className={size === 'sm' ? 'w-4 h-4' : 'w-5 h-5'} />
           {text}
@@ -283,7 +290,7 @@ const Button: React.FC<ButtonProps> = ({
     );
   }
   return (
-    <ButtonWrapper action={action} disabled={disabled}>
+    <ButtonWrapper action={action} spread={spread} disabled={disabled}>
       <div className={buttonStyles}>{text}</div>
     </ButtonWrapper>
   );
