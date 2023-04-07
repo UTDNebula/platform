@@ -2,6 +2,9 @@ module.exports = {
   content: ["../../packages/components/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
   theme: {
     extend: {
+      backgroundImage: {
+        'brand-gradient': "url('/gradient.png')"
+      },
       colors: {
         'haiti': '#090b2c', // brand black
         'persimmon': {

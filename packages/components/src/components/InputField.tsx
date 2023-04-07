@@ -49,7 +49,7 @@
  */
 
 import React from 'react';
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/20/solid';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import BadPropsException from '../utils/BadPropsException';
 import { getInputFieldStyles } from '../utils/CommonStyles';
 import DIFHeader from './DIFHeader';
