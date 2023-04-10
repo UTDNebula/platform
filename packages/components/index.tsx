@@ -13,9 +13,19 @@
 import Button from './src/components/Button';
 import DialogBox from './src/components/DialogBox';
 import Dropdown from './src/components/Dropdown';
+import Hero from './src/components/Hero';
 import HoverableHint from './src/components/HoverableHint';
 import InputField from './src/components/InputField';
 import InputGroup from './src/components/InputGroup';
+import Logo from './src/components/Logo';
 
-// eslint-disable-next-line import/prefer-default-export
-export { Button, DialogBox, Dropdown, HoverableHint, InputField, InputGroup };
+export {
+  Button,
+  DialogBox,
+  Dropdown,
+  Hero,
+  HoverableHint,
+  InputField,
+  InputGroup,
+  Logo
+};

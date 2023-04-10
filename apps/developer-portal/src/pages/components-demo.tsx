@@ -125,7 +125,7 @@ const ComponentsDemo: NextPage = () => {
         text="Go Home"
         Icon={HomeIcon}
         iconSide="right"
-        spread
+        spread="y-left"
       />
       <div className="flex align-center space-x-2 my-2">
         <Button
@@ -218,14 +218,14 @@ const ComponentsDemo: NextPage = () => {
                 size="md"
                 type="tertiary"
                 action="/"
-                spread
+                spread="y-center"
                 text="Action"
               />
               <Button
                 size="md"
                 type="primary"
                 action="/"
-                spread
+                spread="y-center"
                 text="Action"
                 danger
               />

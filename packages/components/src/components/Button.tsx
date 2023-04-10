@@ -15,11 +15,17 @@
  * action (required) - either the href of the NextJS <Link> that this <Button>
  *                     will follow or the function that this <Button> will call
  *                     when clicked.
+ * external (optional) - true if this <Button> is associated with an action
+ *                       external to the service in which it is located, false
+ *                       or unspecified if not.
  * danger (optional) - true if this <Button> is associated with a destructive
  *                     action, false or unspecified if not.
- * spread (optional) - true if this <Button> should conform to the width of its
- *                     parent element (contents centered), false or unspecified
- *                     if it should conform to the width of its contents.
+ * spread (optional) - 'y-left' if this <Button> should conform to the width of
+ *                     its parent element with contents left-justified,
+ *                     'y-center' if it should conform to the width of its
+ *                     parent element with contents centered,
+ *                     'n' or unspecified if it should conform to the width
+ *                     of its contents (this is the default).
  * text (optional*) - the text that this <Button> should contain.
  * Icon (optional*) - the heroicon component that this <Button> should contain.
  * iconSide (optional) - if text and an Icon are included, the side
@@ -38,6 +44,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/outline';
 import BadPropsException from '../utils/BadPropsException';
 
 /* ButtonWrapper is a helper component (not exported) that houses the logic
@@ -51,7 +58,7 @@ further dcumentation is needed. */
 
 type ButtonWrapperProps = {
   action: string | Function;
-  spread?: boolean;
+  spread?: 'y-left' | 'y-center' | 'n';
   disabled?: boolean;
   children?: React.ReactNode;
 };
@@ -71,7 +78,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   }
 
   let wrapperStyles = 'rounded-md';
-  if (spread) {
+  if (spread === 'y-left' || spread === 'y-center') {
     wrapperStyles += ' block w-full';
   } else {
     wrapperStyles += ' block w-fit';
@@ -98,6 +105,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
 };
 
 ButtonWrapper.defaultProps = {
+  spread: 'n',
   disabled: false,
   children: undefined
 };
@@ -109,8 +117,9 @@ type ButtonProps = {
   size: 'sm' | 'md' | 'lg';
   type: 'primary' | 'secondary' | 'tertiary' | 'outlined' | 'inline-link';
   action: string | Function;
+  external?: boolean;
   danger?: boolean;
-  spread?: boolean;
+  spread?: 'y-left' | 'y-center' | 'n';
   text?: string;
   Icon?: React.ElementType;
   iconSide?: 'left' | 'right';
@@ -121,6 +130,7 @@ const Button: React.FC<ButtonProps> = ({
   size,
   type,
   action,
+  external,
   danger,
   spread,
   text,
@@ -135,8 +145,17 @@ const Button: React.FC<ButtonProps> = ({
   }
 
   // Establish styles that are used regardless of props
+  let iconStyles = size === 'sm' ? 'w-4 h-4' : 'w-5 h-5';
+  let externalStyles = size === 'sm' ? 'w-3 h-3 mb-px' : 'w-4 h-4 mb-px';
   let buttonStyles =
-    'flex justify-center items-center rounded-md font-inter font-medium box-border';
+    'flex flex-row items-center rounded-md font-inter font-medium box-border';
+
+  // Choose flex justification based on whether we need to left-justify
+  if (spread === 'y-left') {
+    buttonStyles += ' justify-start';
+  } else {
+    buttonStyles += ' justify-center';
+  }
 
   /* Choose font size, height, and padding based on size prop (padding is
    * different for inline-link type buttons). Specifying a height is
@@ -190,7 +209,7 @@ const Button: React.FC<ButtonProps> = ({
         buttonStyles += ' text-neutral-400';
       } else {
         buttonStyles +=
-          ' text-neutral-700 bg-white hover:border-neutral-300 active:text-neutral-500';
+          ' text-neutral-700 bg-white hover:bg-neutral-50 active:bg-neutral-50 hover:border-neutral-300 active:border-neutral-300 active:text-neutral-500';
       }
     } else if (type === 'outlined') {
       buttonStyles += ' border bg-white';
@@ -270,7 +289,10 @@ const Button: React.FC<ButtonProps> = ({
         <ButtonWrapper action={action} spread={spread} disabled={disabled}>
           <div className={buttonStyles}>
             {text}
-            <Icon className={size === 'sm' ? 'w-4 h-4' : 'w-5 h-5'} />
+            <Icon className={iconStyles} />
+            {external && (
+              <ArrowTopRightOnSquareIcon className={externalStyles} />
+            )}
           </div>
         </ButtonWrapper>
       );
@@ -278,8 +300,9 @@ const Button: React.FC<ButtonProps> = ({
     return (
       <ButtonWrapper action={action} spread={spread} disabled={disabled}>
         <div className={buttonStyles}>
-          <Icon className={size === 'sm' ? 'w-4 h-4' : 'w-5 h-5'} />
+          <Icon className={iconStyles} />
           {text}
+          {external && <ArrowTopRightOnSquareIcon className={externalStyles} />}
         </div>
       </ButtonWrapper>
     );
@@ -287,13 +310,15 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <ButtonWrapper action={action} spread={spread} disabled={disabled}>
       <div className={buttonStyles}>{text}</div>
+      {external && <ArrowTopRightOnSquareIcon className={externalStyles} />}
     </ButtonWrapper>
   );
 };
 
 Button.defaultProps = {
+  external: false,
   danger: false,
-  spread: false,
+  spread: 'n',
   text: undefined,
   Icon: undefined,
   iconSide: 'left',

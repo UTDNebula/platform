@@ -16,11 +16,11 @@
 
 import React from 'react';
 import { NextPage } from 'next';
-import Hero from '../components/Hero';
 import {
   Button,
   DialogBox,
   Dropdown,
+  Hero,
   HoverableHint,
   InputField,
   InputGroup
@@ -62,7 +62,7 @@ const Home: NextPage = () => {
      * The purposes of the four container <div>s, in order:
      * 1. Set the (centered) gradient background to cover the entire viewport.
      *    Also center the page content.
-     * 2. Set the white background for the page content.
+     * 2. Set the white background for the page content and x-margin.
      *    Also set rounded corners for contents (including inner scroll bars!).
      * 3. Set maximum dimensions for and padding around the page content.
      *    Also ensure that a vertical scroll bar appears when necessary.
@@ -70,10 +70,13 @@ const Home: NextPage = () => {
      */
     return (
       <div className="w-screen h-screen flex justify-center items-center fixed bg-brand-gradient bg-cover bg-center">
-        <div className="rounded-md bg-white overflow-hidden">
+        <div className="mx-12 rounded-md bg-white overflow-hidden">
           <div className="p-16 max-h-[calc(100vh-8rem)] overflow-y-auto">
             <div className="flex flex-col justify-center items-center gap-y-10">
-              <Hero />
+              <Hero
+                serviceName="Nebula Platform"
+                slogan="ONE ACCOUNT, ALL OF NEBULA LABS"
+              />
               {/* Welcome and Developer Portal link */}
               <div className="flex flex-col justify-center items-center gap-y-3">
                 <h2 className="text-2xl font-medium">Welcome, {displayName}</h2>
@@ -309,8 +312,11 @@ const Home: NextPage = () => {
     // Unauthenticated - Landing Page
     return (
       <div className="w-screen h-screen flex justify-center items-center bg-brand-gradient bg-cover bg-center">
-        <div className="w-2/3 flex flex-col justify-center items-center gap-y-10 rounded-md p-10 bg-white">
-          <Hero />
+        <div className="w-2/3 flex flex-col justify-center items-center gap-y-10 rounded-md p-16 bg-white">
+          <Hero
+            serviceName="Nebula Platform"
+            slogan="ONE ACCOUNT, ALL OF NEBULA LABS"
+          />
           <p className="text-lg text-neutral-700">
             Sign in and unlock the best experience on all Nebula services. Your
             account helps Nebula services work for you by powering personalized

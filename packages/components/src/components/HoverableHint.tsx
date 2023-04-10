@@ -44,7 +44,7 @@ const HoverableHint: React.FC<HoverableHintProps> = ({
   // Each change in state causes a rerender
   const [visible, setVisible] = React.useState(false);
 
-  // Establish styles that are used regardless of appearance and spread
+  // Establish styles that are used regardless of prop values
   let hintStyles =
     'absolute z-10 w-80 p-4 text-sm text-neutral-700 bg-white rounded-lg shadow-lg shadow-shade/10';
 
