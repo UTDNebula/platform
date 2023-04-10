@@ -98,7 +98,7 @@ const DialogBox: React.FC<DialogBoxProps> = ({
       <div className={boxStyles}>
         <XMarkIcon
           onClick={() => onClose()}
-          className="absolute top-6 right-6 w-5 h-5"
+          className="absolute top-6 right-6 w-5 h-5 cursor-pointer"
         />
         {Icon && (
           <div className={iconCircleStyles}>

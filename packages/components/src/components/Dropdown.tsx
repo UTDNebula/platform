@@ -36,6 +36,9 @@
  *                         a link by supplying a helperTextLink.
  * helperTextLink (optional*) - the href of a NextJS <Link> to be applied to
  *                              the helperText of this <Dropdown>.
+ * spread (optional) - true if this <Dropdown> should conform to the width of
+ *                     its parent element, false or unspecified if it should
+ *                     use a default, fixed width (w-96).
  * error (optional) - true if this <Dropdown> should appear in an error state,
  *                    false or unspecified otherwise.
  * disabled (optional) - true if this <Dropdown> should not function, false or
@@ -68,6 +71,7 @@ type DropdownProps = {
   headerHint?: React.ReactNode;
   helperText?: string;
   helperTextLink?: string;
+  spread?: boolean;
   error?: boolean;
   disabled?: boolean;
 };
@@ -81,6 +85,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   headerHint,
   helperText,
   helperTextLink,
+  spread,
   error,
   disabled
 }) => {
@@ -102,7 +107,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   const styles = getDropdownStyles(selected, !!error, !!disabled, expanded);
 
   return (
-    <div className="font-inter text-haiti w-96">
+    <div className={`font-inter text-haiti ${spread ? 'w-full' : 'w-96'}`}>
       {/* Include a header if one is supplied */}
       <DIFHeader
         text={header}
@@ -186,6 +191,7 @@ Dropdown.defaultProps = {
   headerHint: undefined,
   helperText: undefined,
   helperTextLink: undefined,
+  spread: false,
   error: false,
   disabled: false
 };

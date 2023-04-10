@@ -36,6 +36,9 @@
  *                         a link by supplying a helperTextLink.
  * helperTextLink (optional*) - the href of a NextJS <Link> to be applied to
  *                              the helperText of this <InputField>.
+ * spread (optional) - true if this <InputField> should conform to the width of
+ *                     its parent element, false or unspecified if it should
+ *                     use a default, fixed width (w-96).
  * error (optional) - true if this <InputField> should appear in an error
  *                    state, false or unspecified otherwise.
  * disabled (optional) - true if this <InputField> should not function, false
@@ -64,6 +67,7 @@ type InputFieldProps = {
   headerHint?: React.ReactNode;
   helperText?: string;
   helperTextLink?: string;
+  spread?: boolean;
   error?: boolean;
   disabled?: boolean;
 };
@@ -77,6 +81,7 @@ const InputField: React.FC<InputFieldProps> = ({
   headerHint,
   helperText,
   helperTextLink,
+  spread,
   error,
   disabled
 }) => {
@@ -103,7 +108,7 @@ const InputField: React.FC<InputFieldProps> = ({
   );
 
   return (
-    <div className="font-inter text-haiti w-96">
+    <div className={`font-inter text-haiti ${spread ? 'w-full' : 'w-96'}`}>
       {/* Include a header if one is supplied */}
       <DIFHeader
         text={header}
@@ -153,6 +158,7 @@ InputField.defaultProps = {
   headerHint: undefined,
   helperText: undefined,
   helperTextLink: undefined,
+  spread: false,
   error: false,
   disabled: false
 };

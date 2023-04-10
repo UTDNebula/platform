@@ -18,7 +18,7 @@
 
 import React from 'react';
 import { NextPage } from 'next';
-import Image from 'next/image';
+import Logo from '../components/Logo';
 import { Button, InputField } from 'components';
 
 const Login: NextPage = () => {
@@ -27,16 +27,7 @@ const Login: NextPage = () => {
   return (
     <div className="w-screen h-screen flex justify-center items-center bg-brand-gradient bg-cover bg-center">
       <div className="flex flex-col justify-center items-center gap-y-8 rounded-md px-6 py-10 bg-white">
-        {/* Logo and name lockup */}
-        <div className="flex flex-row justify-center items-center gap-x-4">
-          <Image
-            src="./icon-black.svg"
-            width={1348 / 18}
-            height={864 / 18}
-            alt="Icon"
-          />
-          <h1 className="font-kallisto font-medium text-2xl">Nebula Labs</h1>
-        </div>
+        <Logo />
         {/* Form fields */}
         <div className="flex flex-col justify-center items-center gap-y-4">
           <InputField
