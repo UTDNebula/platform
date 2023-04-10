@@ -20,7 +20,7 @@ const DIFBaseContainerStyles =
   'w-full bg-white box-border border rounded-md shadow-sm shadow-shade/5';
 const DIFBaseMainContentStyles =
   'flex flex-row justify-between items-center px-3 py-2.5 text-sm';
-const DIFBaseHelperTextStyles = 'text-sm my-2.5';
+const DIFBaseHelperTextStyles = 'text-sm my-2';
 
 // Types returned by exported functions for importing TSX files to leverage
 export type DropdownStyles = {
@@ -111,7 +111,8 @@ const DIFComputeStyles = (
     helperTextStyles += ' text-persimmon-500';
   } else {
     headerStyles += ' text-haiti';
-    containerStyles += ' border-neutral-200 ring-cornflower-100 focus-within:ring-4 focus-within:border-cornflower-300';
+    containerStyles +=
+      ' border-neutral-200 ring-cornflower-100 focus-within:ring-4 focus-within:border-cornflower-300';
     if (!isDropdown) {
       inputElementStyles += ' caret-cornflower-500';
     }

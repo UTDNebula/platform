@@ -46,13 +46,15 @@ const DIFHelperText: React.FC<DIFHelperTextProps> = ({
     return <p className={styles}>{text}</p>;
   } else if (text !== undefined && link !== undefined && !disabled) {
     return (
-      <Button
-        size="md"
-        type="inline-link"
-        action={link}
-        danger={error}
-        text={text}
-      />
+      <div className="my-2">
+        <Button
+          size="md"
+          type="inline-link"
+          action={link}
+          danger={error}
+          text={text}
+        />
+      </div>
     );
   }
   return null;

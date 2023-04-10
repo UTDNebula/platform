@@ -16,8 +16,9 @@
 
 import React from 'react';
 import { NextPage } from 'next';
-import Image from 'next/image';
+import Logo from '../components/Logo';
 import { Button, InputField } from 'components';
+import DisplayNameHint from '../components/DisplayNameHint';
 
 const Login: NextPage = () => {
   const [displayName, setDisplayName] = React.useState('');
@@ -27,28 +28,14 @@ const Login: NextPage = () => {
   return (
     <div className="w-screen h-screen flex justify-center items-center bg-brand-gradient bg-cover bg-center">
       <div className="flex flex-col justify-center items-center gap-y-8 rounded-md px-6 py-10 bg-white">
-        {/* Logo and name lockup */}
-        <div className="flex flex-row justify-center items-center gap-x-4">
-          <Image
-            src="./icon-black.svg"
-            width={1348 / 18}
-            height={864 / 18}
-            alt="Icon"
-          />
-          <h1 className="font-kallisto font-medium text-2xl">Nebula Labs</h1>
-        </div>
+        <Logo />
         {/* Form fields */}
         <div className="flex flex-col justify-center items-center gap-y-4">
           <InputField
             content={displayName}
             onChange={setDisplayName}
             header="Display name"
-            headerHint={
-              <p className="text-sm">
-                Your display name is what Nebula Labs services will use to refer
-                to you. It is not a username and cannot be used to sign in.
-              </p>
-            }
+            headerHint={<DisplayNameHint />}
             hint=""
           />
           <InputField
