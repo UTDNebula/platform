@@ -63,7 +63,7 @@ const Login: NextPage = () => {
           <Button
             size="lg"
             type="primary"
-            action={() => alert('hi')}
+            action={() => 'hi'}
             spread="y-center"
             text="Create Account"
           />

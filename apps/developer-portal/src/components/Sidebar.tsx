@@ -27,7 +27,6 @@
 
 import React from 'react';
 import { Button, Logo } from 'components';
-import BadPropsException from '../utils/BadPropsException';
 import {
   ArrowLeftOnRectangleIcon,
   KeyIcon,
@@ -35,6 +34,7 @@ import {
   UserCircleIcon,
   UserGroupIcon
 } from '@heroicons/react/24/outline';
+import BadPropsException from '../utils/BadPropsException';
 
 type SidebarProps = {
   displayName: string;
@@ -52,7 +52,7 @@ const Sidebar: React.FC<SidebarProps> = ({
     (userType === 'projectLeader' && currentPage === 'elevateAccounts')
   ) {
     throw new BadPropsException(
-      'Users of type ' + userType + ' cannot access page ' + currentPage
+      `Users of type ${userType} cannot access page ${currentPage}`
     );
   }
 

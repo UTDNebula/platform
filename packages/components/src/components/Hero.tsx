@@ -21,6 +21,10 @@
 import React from 'react';
 import Image from 'next/image';
 
+const fullWidth = 1348;
+const fullHeight = 864;
+const heroFactor = 12;
+
 type HeroProps = {
   serviceName?: string;
   slogan?: string;
@@ -30,8 +34,8 @@ const Hero: React.FC<HeroProps> = ({ serviceName, slogan }) => (
   <div className="flex flex-row justify-center items-center gap-x-4">
     <Image
       src="./icon-black.svg"
-      width={1348 / 12}
-      height={864 / 12}
+      width={fullWidth / heroFactor}
+      height={fullHeight / heroFactor}
       alt="Icon"
     />
     <div className="flex flex-col justify-start items-center">

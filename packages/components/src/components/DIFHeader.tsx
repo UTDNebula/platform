@@ -55,6 +55,7 @@ const DIFHeader: React.FC<DIFHeaderProps> = ({
 };
 
 DIFHeader.defaultProps = {
+  text: undefined,
   hint: undefined,
   disabled: false
 };

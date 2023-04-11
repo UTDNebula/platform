@@ -84,14 +84,17 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
     wrapperStyles += ' block w-fit';
   }
 
-  if (!disabled && typeof action === 'function') {
-    // <button>s are for function actions
-    return (
-      <button type="button" className={wrapperStyles} onClick={clickHandler}>
-        {children}
-      </button>
-    );
-  } else if (!disabled && typeof action === 'string') {
+  if (!disabled) {
+    if (typeof action === 'function') {
+      // <button>s are for function actions
+      return (
+        <button type="button" className={wrapperStyles} onClick={clickHandler}>
+          {children}
+        </button>
+      );
+    }
+
+    // typeof action === 'string'
     // NextJS <Link>s are for link actions
     return (
       <Link href={action} className={wrapperStyles}>
@@ -145,8 +148,8 @@ const Button: React.FC<ButtonProps> = ({
   }
 
   // Establish styles that are used regardless of props
-  let iconStyles = size === 'sm' ? 'w-4 h-4' : 'w-5 h-5';
-  let externalStyles = size === 'sm' ? 'w-3 h-3 mb-px' : 'w-4 h-4 mb-px';
+  const iconStyles = size === 'sm' ? 'w-4 h-4' : 'w-5 h-5';
+  const externalStyles = size === 'sm' ? 'w-3 h-3 mb-px' : 'w-4 h-4 mb-px';
   let buttonStyles =
     'flex flex-row items-center rounded-md font-inter font-medium box-border';
 
@@ -160,7 +163,6 @@ const Button: React.FC<ButtonProps> = ({
   /* Choose font size, height, and padding based on size prop (padding is
    * different for inline-link type buttons). Specifying a height is
    * required for box-border to work; we use what it would be anyway. */
-  const addPaddingX = type !== 'inline-link';
   if (type === 'inline-link') {
     if (size === 'lg') {
       buttonStyles += ' text-base';
@@ -173,6 +175,7 @@ const Button: React.FC<ButtonProps> = ({
       buttonStyles += ' gap-x-1.5';
     }
   } else {
+    // eslint-disable-next-line no-lonely-if
     if (size === 'lg') {
       buttonStyles += ' text-base h-12 py-3 px-5';
       buttonStyles += ' gap-x-2';
@@ -221,6 +224,7 @@ const Button: React.FC<ButtonProps> = ({
       }
     } else {
       // No background color for inline-links
+      // eslint-disable-next-line no-lonely-if
       if (disabled) {
         buttonStyles += ' text-cornflower-300';
       } else {
@@ -229,6 +233,7 @@ const Button: React.FC<ButtonProps> = ({
       }
     }
   } else {
+    // eslint-disable-next-line no-lonely-if
     if (type === 'primary') {
       buttonStyles += ' text-white';
       if (disabled) {
@@ -263,6 +268,7 @@ const Button: React.FC<ButtonProps> = ({
       }
     } else {
       // No background color for inline-links
+      // eslint-disable-next-line no-lonely-if
       if (disabled) {
         buttonStyles += ' text-persimmon-300';
       } else {

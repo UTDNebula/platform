@@ -153,6 +153,7 @@ const InputField: React.FC<InputFieldProps> = ({
 };
 
 InputField.defaultProps = {
+  visibilityToggle: false,
   hint: 'Response',
   header: undefined,
   headerHint: undefined,

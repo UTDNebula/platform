@@ -18,6 +18,11 @@
 import React from 'react';
 import Image from 'next/image';
 
+const fullWidth = 1348;
+const fullHeight = 864;
+const lgFactor = 18;
+const smFactor = 24;
+
 type LogoProps = {
   serviceName?: string;
   size?: 'sm' | 'lg';
@@ -27,8 +32,8 @@ const Logo: React.FC<LogoProps> = ({ serviceName, size }) => (
   <div className="flex flex-row justify-center items-center gap-x-4">
     <Image
       src="./icon-black.svg"
-      width={1348 / (size === 'sm' ? 24 : 18)}
-      height={864 / (size === 'sm' ? 24 : 18)}
+      width={fullWidth / (size === 'sm' ? smFactor : lgFactor)}
+      height={fullHeight / (size === 'sm' ? smFactor : lgFactor)}
       alt="Icon"
     />
     <h1
