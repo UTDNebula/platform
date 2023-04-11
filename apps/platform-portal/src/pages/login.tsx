@@ -18,8 +18,7 @@
 
 import React from 'react';
 import { NextPage } from 'next';
-import Logo from '../components/Logo';
-import { Button, InputField } from 'components';
+import { Button, InputField, Logo } from 'components';
 
 const Login: NextPage = () => {
   const [email, setEmail] = React.useState('');
@@ -50,8 +49,8 @@ const Login: NextPage = () => {
           <Button
             size="lg"
             type="primary"
-            action={() => alert('hi')}
-            spread
+            action={() => 'hi'}
+            spread="y-center"
             text="Sign In"
           />
           <Button

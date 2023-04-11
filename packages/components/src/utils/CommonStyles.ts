@@ -14,13 +14,13 @@
 /* DROPDOWN AND INPUTFIELD (DIF) */
 
 // Establish styles that are used regardless of props
-const DIFBaseHeaderStyles = 'text-sm font-medium mb-1';
+const baseHeaderStylesDIF = 'text-sm font-medium mb-1';
 // Specify width explicitly to ensure that the border will appear inside
-const DIFBaseContainerStyles =
+const baseContainerStylesDIF =
   'w-full bg-white box-border border rounded-md shadow-sm shadow-shade/5';
-const DIFBaseMainContentStyles =
+const baseMainContentStylesDIF =
   'flex flex-row justify-between items-center px-3 py-2.5 text-sm';
-const DIFBaseHelperTextStyles = 'text-sm my-2';
+const baseHelperTextStylesDIF = 'text-sm my-2';
 
 // Types returned by exported functions for importing TSX files to leverage
 export type DropdownStyles = {
@@ -63,32 +63,28 @@ const DIFComputeStyles = (
   visibilityToggle: boolean
 ): DropdownStyles | InputFieldStyles => {
   // Set up variables
-  let headerStyles: string,
-    containerStyles: string,
-    topRowStyles: string,
-    expandableRowStyles: string,
-    inputElementStyles: string,
-    helperTextStyles: string;
+  let headerStyles: string;
+  let containerStyles: string;
+  let topRowStyles: string;
+  let expandableRowStyles: string;
+  let inputElementStyles: string;
+  let helperTextStyles: string;
   // Establish styles that are used regardless of props. Specify width/height
   // explicitly to ensure that the border will appear inside.
   if (isDropdown) {
-    headerStyles = DIFBaseHeaderStyles;
-    containerStyles = DIFBaseContainerStyles + ' absolute top-0 left-0';
-    topRowStyles =
-      DIFBaseMainContentStyles + ' hover:bg-neutral-50 active:bg-neutral-100';
-    expandableRowStyles =
-      DIFBaseMainContentStyles +
-      ' w-full hover:bg-neutral-100 active:bg-neutral-200';
+    headerStyles = baseHeaderStylesDIF;
+    containerStyles = `${baseContainerStylesDIF} absolute top-0 left-0`;
+    topRowStyles = `${baseMainContentStylesDIF} hover:bg-neutral-50 active:bg-neutral-100`;
+    expandableRowStyles = `${baseMainContentStylesDIF} w-full hover:bg-neutral-100 active:bg-neutral-200`;
     inputElementStyles = ''; // unused
-    helperTextStyles = DIFBaseHelperTextStyles;
+    helperTextStyles = baseHelperTextStylesDIF;
   } else {
-    headerStyles = DIFBaseHeaderStyles;
-    containerStyles =
-      DIFBaseContainerStyles + ' ' + DIFBaseMainContentStyles + ' h-10';
+    headerStyles = baseHeaderStylesDIF;
+    containerStyles = `${baseContainerStylesDIF} ${baseMainContentStylesDIF} h-10`;
     topRowStyles = ''; // unused
     expandableRowStyles = ''; // unused
     inputElementStyles = 'w-full outline-0';
-    helperTextStyles = DIFBaseHelperTextStyles;
+    helperTextStyles = baseHelperTextStylesDIF;
   }
   // Adjust colors/borders/rings based on disabled/error/populated status
   if (disabled) {
@@ -136,26 +132,26 @@ const DIFComputeStyles = (
       topRowStyles += ' rounded-md';
     }
     const dropdownStyles: DropdownStyles = {
-      headerStyles: headerStyles,
-      containerStyles: containerStyles,
-      topRowStyles: topRowStyles,
-      expandableRowStyles: expandableRowStyles,
-      helperTextStyles: helperTextStyles
+      headerStyles,
+      containerStyles,
+      topRowStyles,
+      expandableRowStyles,
+      helperTextStyles
     };
     return dropdownStyles;
-  } else {
-    // Separate the <input> element and visibility icon if the latter exists
-    if (visibilityToggle) {
-      inputElementStyles += ' mr-3';
-    }
-    const inputFieldStyles: InputFieldStyles = {
-      headerStyles: headerStyles,
-      containerStyles: containerStyles,
-      inputElementStyles: inputElementStyles,
-      helperTextStyles: helperTextStyles
-    };
-    return inputFieldStyles;
   }
+  // else (!isDropdown)
+  // Separate the <input> element and visibility icon if the latter exists
+  if (visibilityToggle) {
+    inputElementStyles += ' mr-3';
+  }
+  const inputFieldStyles: InputFieldStyles = {
+    headerStyles,
+    containerStyles,
+    inputElementStyles,
+    helperTextStyles
+  };
+  return inputFieldStyles;
 };
 
 /*
@@ -172,8 +168,8 @@ export const getDropdownStyles = (
   error: boolean,
   disabled: boolean,
   expanded: boolean
-): DropdownStyles => {
-  return DIFComputeStyles(
+): DropdownStyles =>
+  DIFComputeStyles(
     true,
     selected !== undefined,
     error,
@@ -181,7 +177,6 @@ export const getDropdownStyles = (
     expanded,
     false
   ) as DropdownStyles;
-};
 
 /*
  * getInputFieldStyles - returns the computed style object for an <InputField>
@@ -196,8 +191,8 @@ export const getInputFieldStyles = (
   error: boolean,
   disabled: boolean,
   visibilityToggle: boolean
-): InputFieldStyles => {
-  return DIFComputeStyles(
+): InputFieldStyles =>
+  DIFComputeStyles(
     false,
     content !== '',
     error,
@@ -205,4 +200,3 @@ export const getInputFieldStyles = (
     false,
     visibilityToggle
   ) as InputFieldStyles;
-};

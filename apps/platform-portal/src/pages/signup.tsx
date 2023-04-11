@@ -16,8 +16,7 @@
 
 import React from 'react';
 import { NextPage } from 'next';
-import Logo from '../components/Logo';
-import { Button, InputField } from 'components';
+import { Button, InputField, Logo } from 'components';
 import DisplayNameHint from '../components/DisplayNameHint';
 
 const Login: NextPage = () => {
@@ -64,8 +63,8 @@ const Login: NextPage = () => {
           <Button
             size="lg"
             type="primary"
-            action={() => alert('hi')}
-            spread
+            action={() => 'hi'}
+            spread="y-center"
             text="Create Account"
           />
           <Button

@@ -39,8 +39,8 @@ const ComponentsDemo: NextPage = () => {
   > = ['primary', 'secondary', 'tertiary', 'outlined', 'inline-link'];
   return (
     <div className="m-2">
-      <p>I'm Inter</p>
-      <p className="font-kallisto">I'm Kallisto</p>
+      <p>I am Inter</p>
+      <p className="font-kallisto">I am Kallisto</p>
       <HoverableHint hintPosition="bottom-right">
         <p>
           Use this API Key to familiarize yourself with Nebula’s public-facing
@@ -89,29 +89,41 @@ const ComponentsDemo: NextPage = () => {
         helperTextLink="/"
         error
       />
-      {[false, true].map((disabled, disabledIndex) => (
-        <div key={disabledIndex}>
-          {[false, true].map((danger, dangerIndex) => (
-            <div key={disabledIndex * 2 + dangerIndex}>
+      {[false, true].map((disabled) => (
+        <div key={disabled ? 'disabled' : 'enabled'}>
+          {[false, true].map((danger) => (
+            <div
+              key={
+                (disabled ? 'disabled' : 'enabled') +
+                (danger ? 'danger' : 'normal')
+              }
+            >
               {buttonSizes.map((size) => (
                 <div
-                  key={disabledIndex * 2 + dangerIndex + size}
+                  key={
+                    (disabled ? 'disabled' : 'enabled') +
+                    (danger ? 'danger' : 'normal') +
+                    size
+                  }
                   className="flex space-x-2 m-2"
                 >
-                  {buttonTypes.map((type) => {
-                    return (
-                      <Button
-                        key={disabledIndex * 2 + dangerIndex + size + type}
-                        size={size}
-                        type={type}
-                        action="/"
-                        danger={danger}
-                        text="Go Home"
-                        Icon={HomeIcon}
-                        disabled={disabled}
-                      />
-                    );
-                  })}
+                  {buttonTypes.map((type) => (
+                    <Button
+                      key={
+                        (disabled ? 'disabled' : 'enabled') +
+                        (danger ? 'danger' : 'normal') +
+                        size +
+                        type
+                      }
+                      size={size}
+                      type={type}
+                      action="/"
+                      danger={danger}
+                      text="Go Home"
+                      Icon={HomeIcon}
+                      disabled={disabled}
+                    />
+                  ))}
                 </div>
               ))}
             </div>
@@ -125,7 +137,7 @@ const ComponentsDemo: NextPage = () => {
         text="Go Home"
         Icon={HomeIcon}
         iconSide="right"
-        spread
+        spread="y-left"
       />
       <div className="flex align-center space-x-2 my-2">
         <Button
@@ -218,14 +230,14 @@ const ComponentsDemo: NextPage = () => {
                 size="md"
                 type="tertiary"
                 action="/"
-                spread
+                spread="y-center"
                 text="Action"
               />
               <Button
                 size="md"
                 type="primary"
                 action="/"
-                spread
+                spread="y-center"
                 text="Action"
                 danger
               />

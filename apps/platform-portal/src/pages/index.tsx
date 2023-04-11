@@ -16,18 +16,17 @@
 
 import React from 'react';
 import { NextPage } from 'next';
-import Hero from '../components/Hero';
 import {
   Button,
   DialogBox,
   Dropdown,
-  HoverableHint,
+  Hero,
   InputField,
   InputGroup
 } from 'components';
-import DisplayNameHint from '../components/DisplayNameHint';
 import { ArrowRightOnRectangleIcon } from '@heroicons/react/24/outline';
 import { ExclamationTriangleIcon } from '@heroicons/react/24/solid';
+import DisplayNameHint from '../components/DisplayNameHint';
 
 // Mock data; will be handled automatically once SSO is implemented
 const authenticated = true;
@@ -35,34 +34,35 @@ const displayName = 'Ludo DeAnda';
 const services = ['Nebula Planner', 'Nebula Trends', 'UTD Survival Guide'];
 
 const Home: NextPage = () => {
+  // *** HOOKS (only used if authenticated) ***
+  // Values for always-visible <InputField>s
+  const [newDisplayName, setNewDisplayName] = React.useState('');
+  const [newEmailAddress, setNewEmailAddress] = React.useState('');
+  const [confirmNewEmailAddress, setConfirmNewEmailAddress] =
+    React.useState('');
+  const [newPassword, setNewPassword] = React.useState('');
+  const [confirmNewPassword, setConfirmNewPassword] = React.useState('');
+
+  // Modal dialog toggles
+  const [showSpecificServiceDialog, setShowSpecificServiceDialog] =
+    React.useState(false);
+  const [showAllServicesDialog, setShowAllServicesDialog] =
+    React.useState(false);
+  const [showDeleteAccountDialog, setShowDeleteAccountDialog] =
+    React.useState(false);
+
+  // Values for modal dialog contents
+  const [serviceSelection, setServiceSelection] = React.useState<
+    undefined | number
+  >(undefined);
+  const [reenterPassword, setReenterPassword] = React.useState('');
+
   if (authenticated) {
-    // Values for always-visible <InputField>s
-    const [newDisplayName, setNewDisplayName] = React.useState('');
-    const [newEmailAddress, setNewEmailAddress] = React.useState('');
-    const [confirmNewEmailAddress, setConfirmNewEmailAddress] =
-      React.useState('');
-    const [newPassword, setNewPassword] = React.useState('');
-    const [confirmNewPassword, setConfirmNewPassword] = React.useState('');
-
-    // Modal dialog toggles
-    const [showSpecificServiceDialog, setShowSpecificServiceDialog] =
-      React.useState(false);
-    const [showAllServicesDialog, setShowAllServicesDialog] =
-      React.useState(false);
-    const [showDeleteAccountDialog, setShowDeleteAccountDialog] =
-      React.useState(false);
-
-    // Values for modal dialog contents
-    const [serviceSelection, setServiceSelection] = React.useState<
-      undefined | number
-    >(undefined);
-    const [reenterPassword, setReenterPassword] = React.useState('');
-
     /*
      * The purposes of the four container <div>s, in order:
      * 1. Set the (centered) gradient background to cover the entire viewport.
      *    Also center the page content.
-     * 2. Set the white background for the page content.
+     * 2. Set the white background for the page content and x-margin.
      *    Also set rounded corners for contents (including inner scroll bars!).
      * 3. Set maximum dimensions for and padding around the page content.
      *    Also ensure that a vertical scroll bar appears when necessary.
@@ -70,10 +70,13 @@ const Home: NextPage = () => {
      */
     return (
       <div className="w-screen h-screen flex justify-center items-center fixed bg-brand-gradient bg-cover bg-center">
-        <div className="rounded-md bg-white overflow-hidden">
+        <div className="mx-12 rounded-md bg-white overflow-hidden">
           <div className="p-16 max-h-[calc(100vh-8rem)] overflow-y-auto">
             <div className="flex flex-col justify-center items-center gap-y-10">
-              <Hero />
+              <Hero
+                serviceName="Nebula Platform"
+                slogan="ONE ACCOUNT, ALL OF NEBULA LABS"
+              />
               {/* Welcome and Developer Portal link */}
               <div className="flex flex-col justify-center items-center gap-y-3">
                 <h2 className="text-2xl font-medium">Welcome, {displayName}</h2>
@@ -305,37 +308,39 @@ const Home: NextPage = () => {
         )}
       </div>
     );
-  } else {
-    // Unauthenticated - Landing Page
-    return (
-      <div className="w-screen h-screen flex justify-center items-center bg-brand-gradient bg-cover bg-center">
-        <div className="w-2/3 flex flex-col justify-center items-center gap-y-10 rounded-md p-10 bg-white">
-          <Hero />
-          <p className="text-lg text-neutral-700">
-            Sign in and unlock the best experience on all Nebula services. Your
-            account helps Nebula services work for you by powering personalized
-            recommendations and securely storing everything you create. With
-            Platform, you can keep your account just how you want it by
-            adjusting your settings and managing your data.
-          </p>
-          <div className="flex flex-row flex-wrap justify-center items-center gap-3">
-            <Button
-              size="lg"
-              type="secondary"
-              action="/signup"
-              text="Create an account"
-            />
-            <Button
-              size="lg"
-              type="primary"
-              action="/login"
-              text="Sign into Nebula Platform"
-            />
-          </div>
+  }
+  // (else) Unauthenticated - Landing Page
+  return (
+    <div className="w-screen h-screen flex justify-center items-center bg-brand-gradient bg-cover bg-center">
+      <div className="w-2/3 flex flex-col justify-center items-center gap-y-10 rounded-md p-16 bg-white">
+        <Hero
+          serviceName="Nebula Platform"
+          slogan="ONE ACCOUNT, ALL OF NEBULA LABS"
+        />
+        <p className="text-lg text-neutral-700">
+          Sign in and unlock the best experience on all Nebula services. Your
+          account helps Nebula services work for you by powering personalized
+          recommendations and securely storing everything you create. With
+          Platform, you can keep your account just how you want it by adjusting
+          your settings and managing your data.
+        </p>
+        <div className="flex flex-row flex-wrap justify-center items-center gap-3">
+          <Button
+            size="lg"
+            type="secondary"
+            action="/signup"
+            text="Create an account"
+          />
+          <Button
+            size="lg"
+            type="primary"
+            action="/login"
+            text="Sign into Nebula Platform"
+          />
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 };
 
 export default Home;
