@@ -22,7 +22,7 @@
  *       not the case, this component will throw a BadPropsException.
  *
  * Written by Daniel "Ludo" DeAnda (dcd180001) for CS4485.0W1
- * (Nebula Platform CS Project) starting March 21, 2023
+ * (Nebula Platform CS Project) starting April 10, 2023
  */
 
 import React from 'react';
@@ -59,7 +59,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   // static is used to ensure scrolling is ignored;
   // flex-col helps snap the platform and sign out buttons to the bottom
   return (
-    <div className="h-screen w-72 static flex flex-col justify-between items-center bg-white border-r border-neutral-200">
+    <div className="h-screen w-72 flex flex-col justify-between items-center bg-white border-r border-neutral-200">
       {/* Top section - logo, greeting, page tabs */}
       <div className="w-full">
         <div className="my-6 mr-3">
