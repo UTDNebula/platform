@@ -50,6 +50,10 @@ const Home: NextPage = () => {
     React.useState(false);
   const [showDeleteAccountDialog, setShowDeleteAccountDialog] =
     React.useState(false);
+  const inDialog =
+    showSpecificServiceDialog ||
+    showAllServicesDialog ||
+    showDeleteAccountDialog;
 
   // Values for modal dialog contents
   const [serviceSelection, setServiceSelection] = React.useState<
@@ -69,7 +73,11 @@ const Home: NextPage = () => {
      * 4. Establish a flex-col model for the immediate contents of this <div>.
      */
     return (
-      <div className="w-screen h-screen flex justify-center items-center fixed bg-brand-gradient bg-cover bg-center">
+      <div
+        className={`w-screen h-screen flex justify-center items-center fixed bg-brand-gradient bg-cover bg-center${
+          inDialog ? ' pointer-events-none' : ''
+        }`}
+      >
         <div className="mx-12 rounded-md bg-white overflow-hidden">
           <div className="p-16 max-h-[calc(100vh-8rem)] overflow-y-auto">
             <div className="flex flex-col justify-center items-center gap-y-10">

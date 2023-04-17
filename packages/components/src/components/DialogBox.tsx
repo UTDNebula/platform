@@ -16,6 +16,11 @@
  * buttons to 'md'. A gap of 2rem (32px) would be reasonable to separate body
  * text and action buttons (e.g., mb-8).
  *
+ * TIP: Set the Tailwind class pointer-events-none on the page content when a
+ *      <DialogBox> is visible to prevent users from interacting with anything
+ *      outside of it. Don't worry - <DialogBox>es have pointer-events-auto
+ *      hard-coded into them.
+ *
  * Props:
  * onClose (required) - a function that will be called whenever the user clicks
  *                      the "X" icon that is a part of this <DialogBox>. it
@@ -67,7 +72,7 @@ const DialogBox: React.FC<DialogBoxProps> = ({
 
   // Establish styles that are used regardless of appearance
   let boxStyles =
-    'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 p-6 bg-white rounded-md shadow-xl shadow-shade/10 font-inter';
+    'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 p-6 bg-white rounded-md shadow-xl shadow-shade/10 font-inter pointer-events-auto';
   let iconCircleStyles = 'relative w-12 h-12 rounded-3xl mb-5';
   let iconStyles = 'absolute top-3 left-3 w-6 h-6';
   let headerStyles = 'text-lg font-medium mb-2';
@@ -93,7 +98,7 @@ const DialogBox: React.FC<DialogBoxProps> = ({
   return (
     <>
       {/* Screen darkener */}
-      {/* <div className="fixed left-0 top-0 w-full h-full bg-black opacity-50" /> */}
+      <div className="fixed left-0 top-0 w-full h-full bg-black opacity-50" />
       {/* Dialog box proper */}
       <div className={boxStyles}>
         <XMarkIcon
