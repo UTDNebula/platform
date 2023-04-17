@@ -16,6 +16,7 @@ import { Button } from 'components';
 import { HomeIcon } from '@heroicons/react/20/solid';
 import trpc from '../utils/trpc';
 import Sidebar from '../components/Sidebar';
+import Footer from '../components/Footer';
 
 const Home: NextPage = () => {
   const hello = trpc.hello.useQuery({ text: 'Developer Portal' });
@@ -29,29 +30,32 @@ const Home: NextPage = () => {
         userType="admin"
         currentPage="myKeys"
       />
-      <div className="grow h-screen overflow-y-scroll">
-        <div className="mx-3 my-2.5">
-          <h1 className="mb-2">{hello.data.greeting}</h1>
-          <Button
-            size="lg"
-            type="primary"
-            action="/"
-            text="Go Home"
-            Icon={HomeIcon}
-            iconSide="right"
-          />
-          <p>
-            a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a
-            <br />
-            a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a
-            <br />
-            a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a
-            <br />
-            a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a
-            <br />
-            a<br />a<br />a<br />a<br />a<br />a<br />a<br />
-          </p>
+      <div className="grow h-screen flex flex-col justify-start align-start">
+        <div className="grow overflow-y-scroll">
+          <div className="mx-3 my-2.5">
+            <h1 className="mb-2">{hello.data.greeting}</h1>
+            <Button
+              size="lg"
+              type="primary"
+              action="/"
+              text="Go Home"
+              Icon={HomeIcon}
+              iconSide="right"
+            />
+            <p>
+              a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a
+              <br />
+              a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a
+              <br />
+              a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a
+              <br />
+              a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a<br />a
+              <br />
+              a<br />a<br />a<br />a<br />a<br />a<br />a<br />
+            </p>
+          </div>
         </div>
+        <Footer />
       </div>
     </div>
   );

@@ -315,8 +315,10 @@ const Button: React.FC<ButtonProps> = ({
   }
   return (
     <ButtonWrapper action={action} spread={spread} disabled={disabled}>
-      <div className={buttonStyles}>{text}</div>
-      {external && <ArrowTopRightOnSquareIcon className={externalStyles} />}
+      <div className={buttonStyles}>
+        {text}
+        {external && <ArrowTopRightOnSquareIcon className={externalStyles} />}
+      </div>
     </ButtonWrapper>
   );
 };
