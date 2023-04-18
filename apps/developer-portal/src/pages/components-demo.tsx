@@ -77,6 +77,7 @@ const ComponentsDemo: NextPage = () => {
         helperText="Don't like this?"
         helperTextLink="/"
         error
+        disabled
       />
       <InputField
         content={inputFieldContent}
@@ -88,6 +89,7 @@ const ComponentsDemo: NextPage = () => {
         helperText="Need more examples?"
         helperTextLink="/"
         error
+        disabled
       />
       {[false, true].map((disabled) => (
         <div key={disabled ? 'disabled' : 'enabled'}>

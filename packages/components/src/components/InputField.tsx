@@ -124,7 +124,7 @@ const InputField: React.FC<InputFieldProps> = ({
           placeholder={hint}
           disabled={disabled}
           onChange={(e) => onChange(e.target.value)}
-          className={styles.inputElementStyles}
+          className={styles.inputElementStyles + ' disabled:bg-white'}
         />
         {/* Show either visibility toggle icon, if applicable */}
         {visibilityToggle && visible && (
