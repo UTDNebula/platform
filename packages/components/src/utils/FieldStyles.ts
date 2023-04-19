@@ -162,6 +162,7 @@ const computeStyles = (
       helperTextStyles
     };
     return dropdownStyles;
+    // eslint-disable-next-line no-else-return
   } else if (fieldType === 'input') {
     const inputFieldStyles: InputFieldStyles = {
       headerStyles,

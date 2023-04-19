@@ -50,6 +50,9 @@ import { getReadOnlyFieldStyles } from '../utils/FieldStyles';
 import FieldHeader from './FieldHeader';
 import FieldHelperText from './FieldHelperText';
 
+// Number of milliseconds to show check mark as copy confirmation
+const CHECK_TIMEOUT = 1000;
+
 type ReadOnlyFieldProps = {
   content: string;
   visibilityToggle?: boolean;
@@ -87,7 +90,7 @@ const ReadOnlyField: React.FC<ReadOnlyFieldProps> = ({
   const handleCopy = () => {
     navigator.clipboard.writeText(content);
     setShowCopyCheck(true);
-    setTimeout(() => setShowCopyCheck(false), 1000);
+    setTimeout(() => setShowCopyCheck(false), CHECK_TIMEOUT);
   };
 
   // Use utils/CommonStyles.ts to compute styles
