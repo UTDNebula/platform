@@ -1,5 +1,5 @@
 /*
- * InputField Component
+ * Input Field Component
  *
  * Exports a function component that renders a styled and working <InputField>.
  * An <InputField> is a text box that accepts user input. While there is no
@@ -54,9 +54,9 @@
 import React from 'react';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import BadPropsException from '../utils/BadPropsException';
-import { getInputFieldStyles } from '../utils/CommonStyles';
-import DIFHeader from './DIFHeader';
-import DIFHelperText from './DIFHelperText';
+import { getInputFieldStyles } from '../utils/FieldStyles';
+import FieldHeader from './FieldHeader';
+import FieldHelperText from './FieldHelperText';
 
 type InputFieldProps = {
   content: string;
@@ -100,17 +100,12 @@ const InputField: React.FC<InputFieldProps> = ({
   const [visible, setVisible] = React.useState(!visibilityToggle);
 
   // Use utils/CommonStyles.ts to compute styles
-  const styles = getInputFieldStyles(
-    content,
-    !!error,
-    !!disabled,
-    !!visibilityToggle
-  );
+  const styles = getInputFieldStyles(content, !!error, !!disabled);
 
   return (
     <div className={`font-inter text-haiti ${spread ? 'w-full' : 'w-96'}`}>
       {/* Include a header if one is supplied */}
-      <DIFHeader
+      <FieldHeader
         text={header}
         styles={styles.headerStyles}
         hint={headerHint}
@@ -124,24 +119,24 @@ const InputField: React.FC<InputFieldProps> = ({
           placeholder={hint}
           disabled={disabled}
           onChange={(e) => onChange(e.target.value)}
-          className={styles.inputElementStyles}
+          className={`${styles.inputElementStyles} disabled:bg-white`}
         />
         {/* Show either visibility toggle icon, if applicable */}
         {visibilityToggle && visible && (
           <EyeSlashIcon
-            className="w-5 h-5 text-neutral-500"
+            className={styles.iconStyles}
             onClick={() => setVisible(false)}
           />
         )}
         {visibilityToggle && !visible && (
           <EyeIcon
-            className="w-5 h-5 text-neutral-500"
+            className={styles.iconStyles}
             onClick={() => setVisible(true)}
           />
         )}
       </div>
       {/* Include helperText if it is supplied */}
-      <DIFHelperText
+      <FieldHelperText
         styles={styles.helperTextStyles}
         text={helperText}
         link={helperTextLink}

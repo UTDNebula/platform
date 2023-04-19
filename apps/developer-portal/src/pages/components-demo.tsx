@@ -2,7 +2,7 @@
  * Components Demo Page (http(s)://[hosturl]/components-demo)
  *
  * This Page, written for development purposes only, is for testing and
- * demoing the various configurations of the components in the shared library.
+ * demoing the various configurations of local and shared library components.
  *
  * Written by Daniel "Ludo" DeAnda (dcd180001) for CS4485.0W1
  * (Nebula Platform CS Project) starting March 21, 2023
@@ -14,7 +14,8 @@ import {
   DialogBox,
   Dropdown,
   HoverableHint,
-  InputField
+  InputField,
+  ReadOnlyField
 } from 'components';
 import { NextPage } from 'next';
 import {
@@ -63,9 +64,9 @@ const ComponentsDemo: NextPage = () => {
           'First option',
           'Second option',
           'Third option',
-          'Fourth option'
+          'Fourth option that is incredibly long, like why would you choose this one'
         ]}
-        hint="Select one, or don't, I'm not your dad..."
+        hint="Select one, or don't, I'm not your dad. Seriously, what do you think you're doing?"
         selected={dropdownSelection}
         header="Display name"
         headerHint={
@@ -82,12 +83,20 @@ const ComponentsDemo: NextPage = () => {
         content={inputFieldContent}
         onChange={(newContent: string) => setInputFieldContent(newContent)}
         visibilityToggle
-        hint="Say something, I'm giving up on you..."
+        hint="Say something, I'm giving up on you / I'm sorry that I didn't get to you"
         header="Song Lyric"
         headerHint={<p>Something by OneRepublic, for example.</p>}
         helperText="Need more examples?"
         helperTextLink="/"
         error
+      />
+      <ReadOnlyField
+        content="qwertyuiopasdfghjklzeriobnurepirtnbpabinprtaoiadpiogahpgn"
+        visibilityToggle
+        header="It's a key!"
+        headerHint={<p>Just key things</p>}
+        helperText="Get more"
+        helperTextLink="/"
       />
       {[false, true].map((disabled) => (
         <div key={disabled ? 'disabled' : 'enabled'}>

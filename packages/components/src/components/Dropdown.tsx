@@ -1,5 +1,5 @@
 /*
- * Dropdown Component
+ * Dropdown Field Component
  *
  * Exports a function component that renders a styled and working <Dropdown>.
  * A <Dropdown> is an expandable menu from which a single option can be chosen.
@@ -58,9 +58,9 @@ import {
   ChevronUpIcon
 } from '@heroicons/react/20/solid';
 import BadPropsException from '../utils/BadPropsException';
-import { getDropdownStyles } from '../utils/CommonStyles';
-import DIFHeader from './DIFHeader';
-import DIFHelperText from './DIFHelperText';
+import { getDropdownStyles } from '../utils/FieldStyles';
+import FieldHeader from './FieldHeader';
+import FieldHelperText from './FieldHelperText';
 
 type DropdownProps = {
   options: string[];
@@ -109,7 +109,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   return (
     <div className={`font-inter text-haiti ${spread ? 'w-full' : 'w-96'}`}>
       {/* Include a header if one is supplied */}
-      <DIFHeader
+      <FieldHeader
         text={header}
         styles={styles.headerStyles}
         hint={headerHint}
@@ -129,11 +129,13 @@ const Dropdown: React.FC<DropdownProps> = ({
           >
             <div className={styles.topRowStyles}>
               {/* Show hint or selected option text, as applicable */}
-              {selected === undefined ? hint : options[selected]}
+              <div className="grow truncate">
+                {selected === undefined ? hint : options[selected]}
+              </div>
               {expanded ? (
-                <ChevronUpIcon className="w-5 h-5 text-neutral-500" />
+                <ChevronUpIcon className={styles.iconStyles} />
               ) : (
-                <ChevronDownIcon className="w-5 h-5 text-neutral-500" />
+                <ChevronDownIcon className={styles.iconStyles} />
               )}
             </div>
           </button>
@@ -160,10 +162,10 @@ const Dropdown: React.FC<DropdownProps> = ({
                       setExpanded(false);
                     }}
                   >
-                    {option}
+                    <div className="grow truncate">{option}</div>
                     {/* Check mark if option is currently selected */}
                     {index === selected && (
-                      <CheckIcon className="w-5 h-5 text-neutral-500" />
+                      <CheckIcon className={styles.iconStyles} />
                     )}
                   </button>
                 );
@@ -173,7 +175,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         </div>
       </div>
       {/* Include helperText if it is supplied */}
-      <DIFHelperText
+      <FieldHelperText
         styles={styles.helperTextStyles}
         text={helperText}
         link={helperTextLink}

@@ -192,7 +192,7 @@ const Home: NextPage = () => {
           </div>
         </div>
         {/* The <DialogBox>es are included at this
-            <div> level so they cneter properly. */}
+            <div> level so they center properly. */}
         {/* "Delete account data for a specific Nebula service..." */}
         {showSpecificServiceDialog && (
           <DialogBox
