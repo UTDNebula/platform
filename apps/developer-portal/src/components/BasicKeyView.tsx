@@ -11,8 +11,8 @@
  * further explanation to and requesting confirmation from the user.
  *
  * Props:
- * key (required) - the actual Basic API Key that this
- *                  <BasicKeyView> should reveal to users.
+ * value (required) - the actual Basic API Key that this
+ *                    <BasicKeyView> should reveal to users.
  * onRegenerateRequest (required) - the function that this <BasicKeyView> will
  *                                  call when the user clicks the "Regenerate"
  *                                  button. see above for more information.
@@ -30,11 +30,12 @@
  * (Nebula Platform CS Project) starting April 17, 2023
  */
 
-import { HoverableHint } from 'components';
+import { Button, HoverableHint, ReadOnlyField } from 'components';
 import React from 'react';
+import { ArrowPathIcon } from '@heroicons/react/24/outline';
 
 type BasicKeyViewProps = {
-  key: string;
+  value: string;
   onRegenerateRequest: Function;
   quota: number;
   quotaRemaining: number;
@@ -42,23 +43,40 @@ type BasicKeyViewProps = {
 };
 
 const BasicKeyView: React.FC<BasicKeyViewProps> = ({
-  key,
+  value,
   onRegenerateRequest,
   quota,
   quotaRemaining,
   refillTime
 }) => {
+  const refillTimeDate = new Date(refillTime);
   return (
-    <div className="flex flex-col">
-      <div className="flex flex-row gap-x-1">
+    <div className="flex flex-col gap-y-1">
+      <div className="flex flex-row items-center gap-x-1">
         <p className="text-lg font-bold">Basic Key</p>
-        <HoverableHint>
+        <HoverableHint hintPosition="bottom-right">
           Use this API Key to familiarize yourself with Nebula&apos;s
           public-facing API endpoints and to perform testing during development.
           You&apos;ll have access to it for as long as you are opted into
           Developer Portal.
         </HoverableHint>
       </div>
+      <div className="flex flex-row items-center gap-x-2">
+        <ReadOnlyField content={value} visibilityToggle />
+        <Button
+          size="md"
+          type="outlined"
+          action={onRegenerateRequest}
+          text="Regenerate"
+          Icon={ArrowPathIcon}
+        />
+      </div>
+      <p className="mt-0.5">
+        {quotaRemaining}/{quota} requests remaining
+        <br />
+        {/* toLocaleString is language and time-sensitive */}
+        Next refill: {refillTimeDate.toLocaleString()}
+      </p>
     </div>
   );
 };

@@ -18,6 +18,7 @@ import HoverableHint from './src/components/HoverableHint';
 import InputField from './src/components/InputField';
 import InputGroup from './src/components/InputGroup';
 import Logo from './src/components/Logo';
+import ReadOnlyField from './src/components/ReadOnlyField';
 
 export {
   Button,
@@ -27,5 +28,6 @@ export {
   HoverableHint,
   InputField,
   InputGroup,
-  Logo
+  Logo,
+  ReadOnlyField
 };

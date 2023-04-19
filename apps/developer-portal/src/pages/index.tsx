@@ -16,10 +16,11 @@
 
 import React from 'react';
 import { NextPage } from 'next';
-import { Button, Hero } from 'components';
+import { Button, DialogBox, Hero } from 'components';
 // import trpc from '../utils/trpc';
-import Sidebar from '../components/Sidebar';
+import BasicKeyView from '../components/BasicKeyView';
 import Footer from '../components/Footer';
+import Sidebar from '../components/Sidebar';
 
 // For debug purposes; the final shape of this data will be informed by backend
 type User = {
@@ -38,68 +39,100 @@ const Home: NextPage = () => {
 
   const user: User | undefined = {
     displayName: 'Ludo DeAnda',
-    permissionLevel: 'user'
+    permissionLevel: 'developer'
   };
 
+  const [regenerateDialogOpen, setRegenerateDialogOpen] = React.useState(false);
+  const inDialog = regenerateDialogOpen;
+
   return (
-    <div className="flex flex-row justify-start align-start overflow-hidden">
+    <div
+      className={`flex flex-row justify-start align-start overflow-hidden ${
+        inDialog ? ' pointer-events-none' : ''
+      }`}
+    >
       {/* Sidebar is on the left because of flex-row justify-start */}
       <Sidebar
         currentPage="index"
         userType={user?.permissionLevel}
         displayName={user?.displayName}
       />
-      {/* grow so body takes up rest of width, flex-col to separate content and footer */}
+      {/* grow so body takes up rest of width,
+          flex-col to separate content and footer */}
       <div className="grow h-screen flex flex-col">
         {/* only the content scrolls */}
-        <div className="grow overflow-y-scroll flex flex-col justify-center items-center">
-          {/* show "Join Developer Portal" content if necessary */}
-          {(!user || user?.permissionLevel === 'user') && (
-            <div className="w-2/3 flex flex-col justify-center items-center gap-y-10">
-              <Hero
-                serviceName="Developer Portal"
-                slogan="BUILD FOR THE UTD COMMUNITY"
+        <div className="grow overflow-y-scroll flex flex-col">
+          {/* choose whether to show "My API Keys" 
+              (first) or "Join Developer Portal" (second) */}
+          {user && user?.permissionLevel !== 'user' ? (
+            <div className="flex flex-col gap-y-6 m-12">
+              <h1 className="font-kallisto font-bold text-4xl">My API Keys</h1>
+              <BasicKeyView
+                value="qwertyuiopasdfghjklz"
+                onRegenerateRequest={() => setRegenerateDialogOpen(true)}
+                quota={3000}
+                quotaRemaining={2000}
+                refillTime={1684281600000}
               />
-              <p className="text-lg text-neutral-700">
-                Leverage Nebula&apos;s services to level up your next
-                application. {user ? ' Opt' : ' Sign'} in and immediately
-                receive an API key you can try out, tinker with, and test on.
-                Ready for release? Let us know and we&apos;ll set you up with
-                keys fit for production, all delivered straight to your
-                dashboard. Contributing to Nebula services? All the keys you
-                need for development are just a few clicks away.
-              </p>
-              {!user && (
-                <div className="flex flex-row flex-wrap justify-center items-center gap-3">
-                  <Button
-                    size="lg"
-                    type="secondary"
-                    action="/"
-                    text="Create an account"
-                  />
+            </div>
+          ) : (
+            <div className="grow flex flex-col justify-center items-center">
+              <div className="w-2/3 flex flex-col justify-center items-center gap-y-10">
+                <Hero
+                  serviceName="Developer Portal"
+                  slogan="BUILD FOR THE UTD COMMUNITY"
+                />
+                <p className="text-lg text-neutral-700">
+                  Leverage Nebula&apos;s services to level up your next
+                  application. {user ? ' Opt' : ' Sign'} in and immediately
+                  receive an API key you can try out, tinker with, and test on.
+                  Ready for release? Let us know and we&apos;ll set you up with
+                  keys fit for production, all delivered straight to your
+                  dashboard. Contributing to Nebula services? All the keys you
+                  need for development are just a few clicks away.
+                </p>
+                {!user && (
+                  <div className="flex flex-row flex-wrap justify-center items-center gap-3">
+                    <Button
+                      size="lg"
+                      type="secondary"
+                      action="/"
+                      text="Create an account"
+                    />
+                    <Button
+                      size="lg"
+                      type="primary"
+                      action="/"
+                      text="Sign into Developer Portal"
+                    />
+                  </div>
+                )}
+                {!!user && user?.permissionLevel === 'user' && (
                   <Button
                     size="lg"
                     type="primary"
                     action="/"
-                    text="Sign into Developer Portal"
+                    text="Become a Developer"
                   />
-                </div>
-              )}
-              {!!user && user?.permissionLevel === 'user' && (
-                <Button
-                  size="lg"
-                  type="primary"
-                  action="/"
-                  text="Become a Developer"
-                />
-              )}
+                )}
+              </div>
             </div>
           )}
-          {/* TODO: show "My API Keys" content */}
         </div>
         {/* Footer is aligned at the bottom because of flex-col */}
         <Footer />
       </div>
+      {/* The <DialogBox>es are included at this
+            <div> level so they center properly. */}
+      {regenerateDialogOpen && (
+        <DialogBox
+          onClose={() => setRegenerateDialogOpen(false)}
+          header="Regenerate Basic Key"
+          appearance="wide"
+        >
+          Hi
+        </DialogBox>
+      )}
     </div>
   );
 };
