@@ -8,12 +8,13 @@
   ],
   "scripts": {
     "build": "turbo run build --no-daemon",
-    "dev": "turbo run dev --no-daemon",
+    "dev": "dotenv -- turbo run dev --no-daemon",
     "lint": "turbo run lint --no-daemon",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
+    "dotenv-cli": "^7.2.1",
     "eslint-config-custom": "workspace:*",
     "postcss": "^8.4.21",
     "prettier": "latest",
