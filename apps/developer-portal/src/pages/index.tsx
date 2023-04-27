@@ -17,7 +17,7 @@
 import React from 'react';
 import { NextPage } from 'next';
 import { Button, DialogBox, Hero } from 'components';
-// import trpc from '../utils/trpc';
+import trpc from '../utils/trpc';
 import BasicKeyView from '../components/BasicKeyView';
 import Footer from '../components/Footer';
 import Sidebar from '../components/Sidebar';
@@ -29,7 +29,11 @@ type User = {
 };
 
 const Home: NextPage = () => {
-  // const hello = trpc.hello.useQuery({ text: 'Developer Portal' });
+  const hello = trpc.kmsUser.getType.useQuery({
+    user_id: '64267c56dd73f8b6790fee87'
+  });
+
+  console.log(hello);
   // if (!hello.data) {
   //   return <div>Loading...</div>;
   // }
