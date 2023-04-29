@@ -29,15 +29,10 @@ type User = {
 };
 
 const Home: NextPage = () => {
-  const hello = trpc.kmsUser.getType.useQuery({
-    user_id: '64267c56dd73f8b6790fee87'
-  });
-
-  console.log(hello);
-  // if (!hello.data) {
-  //   return <div>Loading...</div>;
-  // }
-  // return <h1 className="mb-2">{hello.data.greeting}</h1>;
+  // Get User Type
+  // const hello = trpc.kmsUser.getType.useQuery({
+  //   user_id: '64267c56dd73f8b6790fee87'
+  // });
 
   // const user: User | undefined = undefined;
 
